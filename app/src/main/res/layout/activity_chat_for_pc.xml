@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.Activity_Chat_For_PC">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/pc_txtMessage"
+            android:paddingHorizontal="7dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="" />
+
+    </ScrollView>
+
+    <!--채팅 입력창-->
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
+
+
+        <ImageView
+            android:padding="5dp"
+            android:background="@color/white"
+            android:src="@drawable/ic_send_image"
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+        <EditText
+            android:id="@+id/pc_edit_message"
+            android:layout_weight="1"
+            android:inputType="textMultiLine"
+            android:background="#ffffff"
+            android:textColor="#000000"
+            android:hint="내용을 입력하세요"
+            android:padding="5dp"
+            android:textSize="14dp"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/pc_send_button"
+            android:src="@drawable/ic_send_message"
+            android:background="@color/white"
+            android:padding="5dp"
+            android:layout_width="40dp"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+
+</LinearLayout>

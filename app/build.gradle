@@ -1,0 +1,149 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 28
+    buildToolsVersion '28.0.3'
+
+    defaultConfig {
+        applicationId "com.example.hun73.seac_apply_ver2"
+        minSdkVersion 21
+        targetSdkVersion 28
+        multiDexEnabled true
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    dataBinding {
+        enabled = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    flavorDimensions("cevafin")
+
+    productFlavors {
+        google {
+            dimension "cevafin"
+            buildConfigField "boolean", "F_DROID", "false"
+        }
+        fdroid {
+            dimension "cevafin"
+            buildConfigField "boolean", "F_DROID", "true"
+        }
+    }
+    compileOptions {
+        targetCompatibility '1.8'
+        sourceCompatibility '1.8'
+    }
+    externalNativeBuild {
+        cmake {
+            path "src/main/cpp/CMakeLists.txt"
+        }
+    }
+}
+
+dependencies {
+    androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0-alpha04', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+
+    //noinspection GradleDependency
+
+    //    implementation 'androidx.appcompat:appcompat:1.1.0-alpha01'
+    implementation 'androidx.appcompat:appcompat:1.0.2'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test:runner:1.1.0-alpha4'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0-alpha4'
+
+    // 볼리
+    implementation 'com.android.volley:volley:1.1.0'
+
+    // 서클뷰 이미지 라이브러리
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
+
+    // 피카소 이미지 라이브러리
+    implementation 'com.squareup.picasso:picasso:2.71828'
+
+    // 로띠 애니메이션 라이브러리
+    implementation 'com.airbnb.android:lottie:2.6.1'
+
+    // 이미지 크로퍼
+    implementation 'com.theartofdev.edmodo:android-image-cropper:2.7.+'
+
+    // 슬라이드 네비게이션 바
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0-beta01'
+    implementation 'com.yarolegovich:sliding-root-nav:1.1.0'
+    implementation 'gun0912.ted:tedpermission:2.2.0'
+    implementation 'androidx.multidex:multidex:2.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.7.1'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.7.1'
+    debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.6.3'
+    releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.6.3'
+
+    // 테드 바텀 피커
+    implementation 'gun0912.ted:tedbottompicker:2.0.0-alpha1'
+
+    // 레트로핏
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.google.android.material:material:1.0.0-beta01'
+
+    // 이미지 압축기
+    implementation 'id.zelory:compressor:2.1.0'
+
+    // 이미지 멀티터지 줌
+    implementation 'com.github.chrisbanes.photoview:library:1.2.3'
+
+    // 아래부터 모두 뽀모도로
+    annotationProcessor "androidx.databinding:databinding-compiler:3.5.0-alpha01"
+    annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'
+    implementation 'androidx.room:room-runtime:2.1.0-alpha03'
+    implementation 'androidx.lifecycle:lifecycle-extensions:2.0.0'
+
+    // Preferences
+    implementation 'androidx.preference:preference:1.1.0-alpha02'
+    implementation 'com.takisoft.preferencex:preferencex:1.0.0'
+    implementation 'com.takisoft.preferencex:preferencex-ringtone:1.0.0'
+
+    // Color picker for the labels
+    implementation 'com.takisoft.colorpicker:colorpicker:1.0.0'
+
+    // EventBus
+    implementation 'de.greenrobot:eventbus:2.4.0'
+
+    // for the NavigationView of NavigationDrawer
+    implementation 'com.google.android.material:material:1.1.0-alpha02'
+
+    //noinspection GradleDependency
+    api 'com.android.support:design:28.0.0-alpha1'
+
+    // About
+    implementation 'com.github.daniel-stoneuk:material-about-library:2.4.2'
+
+    // Statistics
+    implementation 'com.github.PhilJay:MPAndroidChart:v3.0.3'
+
+    // Time
+    implementation 'joda-time:joda-time:2.10'
+    implementation 'androidx.recyclerview:recyclerview-selection:1.1.0-alpha01'
+
+    // icons
+    implementation 'com.mikepenz:iconics-core:3.1.0'
+    implementation 'com.mikepenz:community-material-typeface:2.0.46.1@aar'
+
+    // intro
+    implementation 'com.github.adrcotfas:material-intro:e1228'
+
+    // IAP
+    googleImplementation 'com.anjlab.android.iab.v3:library:1.0.44'
+    fdroidImplementation 'org.sufficientlysecure:donations:2.6'
+    implementation project(':opencv')
+}

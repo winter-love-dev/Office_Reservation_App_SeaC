@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.Chat_Fragment_Manager">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/chat_frag_toolbar"
+        android:theme="@style/ToolbarTheme"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_main" />
+
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/chat_frag_tab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabSelectedTextColor="@color/gray"
+        app:tabIndicatorColor="@color/bg_main"
+        app:tabIndicatorHeight="2.5dp"
+        app:tabTextColor="@color/black"
+        app:tabGravity="fill"
+        app:tabMode="fixed"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/bg_main" />
+
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/chat_frag_pager"
+        android:layout_weight="1"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent" />
+
+</LinearLayout>

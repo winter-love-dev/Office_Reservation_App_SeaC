@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context=".Activity_WorkSpace_Detail_Info">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/work_space_detail_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_main"
+        android:elevation="10dp"
+        android:theme="@style/ToolbarTheme" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:id="@+id/de_card_1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="3dp"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="300dp"
+                android:background="@drawable/item_bg_card_list">
+
+                <!--뷰페이저-->
+                <androidx.viewpager.widget.ViewPager
+                    android:id="@+id/work_info_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:background="@drawable/item_home_list_image"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_2" />
+
+                <TextView
+                    android:id="@+id/DetailViewPage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:background="@drawable/item_gra_home_list_title"
+                    android:gravity="right"
+                    android:paddingHorizontal="25dp"
+                    android:paddingTop="20dp"
+                    android:paddingBottom="10dp"
+                    android:text="  "
+                    android:textColor="@color/white"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+            <!--상단 정보-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <!--왼 쪽 가격, 표시-->
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/work_info_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:paddingHorizontal="15dp"
+                        android:paddingVertical="10dp"
+                        android:text="사무실 이름"
+                        android:textColor="#000000"
+                        android:textSize="30dp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/work_info_price_d"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="25dp"
+                        android:layout_marginBottom="15dp"
+                        android:text="1일 : 000 원"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/work_info_price_w"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:text="7일 : 000 원"
+                        android:textSize="15dp" />
+
+                    <TextView
+                        android:id="@+id/work_info_price_m"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="15dp"
+                        android:layout_marginTop="15dp"
+                        android:layout_marginBottom="40dp"
+                        android:text="28일 : 000 원"
+                        android:textSize="15dp" />
+
+                </LinearLayout>
+
+
+                <!--오른 쪽 테이블, 호스트 id, 연락처 표시-->
+                <LinearLayout
+                    android:id="@+id/work_info_host_question"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:gravity="center"
+                        android:layout_marginTop="11dp"
+                        android:layout_marginBottom="2dp"
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:text="호스트"
+                            android:layout_marginVertical="2dp"
+                            android:textColor="@color/bg_main"
+                            android:textSize="20dp"
+                            android:textStyle="italic" />
+
+                        <ImageView
+                            android:visibility="gone"
+                            android:id="@+id/work_info_question_icon"
+                            android:src="@drawable/icon_message"
+                            android:layout_marginHorizontal="7dp"
+                            android:layout_marginVertical="2dp"
+                            android:layout_width="26dp"
+                            android:layout_height="26dp" />
+
+                    </LinearLayout>
+
+                    <!--프로필 영역-->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <de.hdodenhof.circleimageview.CircleImageView
+                            android:id="@+id/work_info_host_profile_image"
+                            android:layout_width="60dp"
+                            android:layout_height="60dp"
+                            android:layout_marginLeft="5dp"
+                            android:padding="1dp"
+                            android:src="@drawable/logo_2"
+                            app:civ_border_color="@color/bg_main"
+                            app:civ_border_width="0.1dp" />
+                        
+                            <TextView
+                                android:id="@+id/work_info_host_profile_name"
+                                android:layout_width="90dp"
+                                android:layout_marginHorizontal="5dp"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:padding="5dp"
+                                android:text="HostId"
+                                android:textSize="16dp" />
+
+
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="15dp"
+                        android:gravity="center"
+                        android:text="연락처"
+                        android:textColor="@color/bg_main"
+                        android:textSize="15dp"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/work_info_host_profile_call"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:padding="10dp"
+                        android:text="call: "
+                        android:textSize="15dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+
+            <TextView
+                android:id="@+id/work_info_table_max"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:padding="10dp"
+                android:text="테이블 이용 현황"
+                android:textColor="@color/bg_main"
+                android:textSize="22dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/work_info_table"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="15dp"
+                android:padding="10dp"
+                android:text="남은 테이블: "
+                android:textSize="18dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+
+            <TextView
+                android:id="@+id/work_info_address_1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                android:text="주소 1"
+                android:textColor="@color/bg_main"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/work_info_address_2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:padding="10dp"
+                android:text="주소 2"
+                android:textSize="15dp"
+                android:textStyle="italic" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="@color/bg_main"
+                android:layout_marginTop="30dp"
+                android:padding="15dp"
+                android:text="사무실 소개"
+                android:textSize="20dp"
+                android:textStyle="italic" />
+
+            <TextView
+                android:id="@+id/work_info_introduce"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="50dp"
+                android:hint="정보정보정보정보\n정보정보정보정보\n정보정보정보정보\nasdasdasd\nasdasasasd"
+                android:paddingHorizontal="15dp"
+                android:paddingBottom="45dp"
+                android:textSize="20dp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:layout_weight="1"
+                    android:padding="15dp"
+                    android:text="후기"
+                    android:textColor="@color/bg_main"
+                    android:textSize="20dp"
+                    android:textStyle="italic" />
+
+                <Button
+                    android:id="@+id/review_list_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@drawable/item_button_white"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="(클릭) 후기 목록으로"
+                    android:textColor="@color/bg_main"
+                    android:textSize="18dp" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/review_guid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="100dp"
+                android:hint="아직 작성된 후기가 없습니다"
+                android:paddingHorizontal="15dp"
+                android:textSize="20dp" />
+
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/bg_main" />
+
+            <!--저작권 표시-->
+            <!--모든 저작권은 김성훈에게 있습니다.
+            모든 페이지 내용의 소유권은 김성훈이 가지고 있습니다.-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="10dp"
+                android:paddingTop="15dp"
+                android:paddingBottom="20dp"
+                android:text="Copyright(c)2019 by 김성훈. \nAll Page content is \nproperty of 김성훈."
+                android:textColor="@color/bg_main"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+    <LinearLayout
+        android:id="@+id/de_card_2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="20dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="70dp"
+            android:gravity="center"
+            android:text="삭제완료"
+            android:textColor="@color/bg_main"
+            android:textSize="50dp" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/delete_WorkSpace_lottie_success"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="150dp"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="delete_lottie.json"
+            app:lottie_loop="true" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/work_info_reg_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bg_main"
+        android:gravity="center"
+        android:padding="13dp"
+        android:text="결제 후 이용하기"
+        android:textColor="@color/white"
+        android:textSize="25dp" />
+
+</LinearLayout>

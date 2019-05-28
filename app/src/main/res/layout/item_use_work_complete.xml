@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:layout_margin="10dp"
+    android:orientation="vertical"
+    android:elevation="6dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:background="@drawable/item_bg_card_list"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/time_remaining_comp"
+        android:text="지난 시간"
+        android:textSize="15dp"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/use_work_comp_date_count"
+        android:text="(지난 시간 계산 중)"
+        android:textSize="25dp"
+        android:gravity="center"
+        android:textStyle="italic"
+        android:textColor="@color/bg_main"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginVertical="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_marginHorizontal="5dp"
+        android:layout_height="0.1dp"
+        android:background="@color/bg_main" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="0dp"
+            android:layout_height="match_parent">
+
+
+
+            <TextView
+                android:text="예약한 사무실"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/gray"
+                android:layout_marginTop="10dp"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/use_work_comp_place_name"
+                android:text="사무실 이름"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="입장일"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/gray"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/use_work_comp_start_day"
+                android:text="입장일"
+                android:textSize="18dp"
+                android:textStyle="italic"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="종료일"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/gray"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/use_work_comp_end_day"
+                android:text="종료일"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:text="총 이용 일 수"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/gray"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/use_work_comp_total_use_day"
+                android:text="총 이용 일 수"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/re_date"
+                android:text="후기 작성일"
+                android:textSize="15dp"
+                android:textStyle="italic"
+                android:textColor="@color/gray"
+                android:layout_marginHorizontal="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/use_work_review_date"
+                android:text="총 이용 일 수"
+                android:textSize="18dp"
+                android:textColor="@color/black"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:gravity="center"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+
+            <ImageView
+                android:id="@+id/use_work_comp_image"
+                android:layout_width="140dp"
+                android:layout_height="140dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/logo_2" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!--<TextView-->
+    <!--android:id="@+id/use_work_now_pay"-->
+    <!--android:text="지불한 금액"-->
+    <!--android:textSize="25dp"-->
+    <!--android:gravity="right"-->
+    <!--android:textColor="@color/gray"-->
+    <!--android:layout_marginHorizontal="10dp"-->
+    <!--android:layout_marginVertical="10dp"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+    <!---->
+
+    <TextView
+        android:id="@+id/use_work_comp_pay"
+        android:text="지불한 금액"
+        android:textSize="25dp"
+        android:gravity="right"
+        android:textColor="@color/gray"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginBottom="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    
+    <Button
+        android:text="후기 작성하기"
+        android:textSize="25dp"
+        android:padding="15dp"
+        android:textColor="@color/white"
+        android:id="@+id/button_review"
+        android:background="@drawable/item_button_blue"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"/>
+
+    <Button
+        android:textSize="25dp"
+        android:padding="15dp"
+        android:text="후기 확인하기"
+        android:textColor="@color/white"
+        android:visibility="gone"
+        android:id="@+id/button_review_detail"
+        android:background="@drawable/item_button_blue"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="10dp"/>
+
+</LinearLayout>
