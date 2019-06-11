@@ -270,4 +270,10 @@
         <item name="android:paddingBottom">16dp</item>
         <item name="android:layout_marginBottom">16dp</item>
     </style>
+
+    <style name="CallActivityTheme" parent="android:Theme.Black">
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowNoTitle">true</item>
+    </style>
 </resources>

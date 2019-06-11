@@ -146,4 +146,8 @@ dependencies {
     googleImplementation 'com.anjlab.android.iab.v3:library:1.0.44'
     fdroidImplementation 'org.sufficientlysecure:donations:2.6'
     implementation project(':opencv')
+
+    // appRTC
+    implementation 'org.webrtc:google-webrtc:1.0.+'
+    implementation files('libs/autobanh.jar')
 }

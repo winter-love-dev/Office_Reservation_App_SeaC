@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.example.hun73.seac_apply_ver2">
+    package="com.example.hun73.seac_apply_ver2"
+    android:installLocation="preferExternal">
 
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" /> <!-- 인터넷 접속권한 -->
-    <uses-permission android:name="android.permission.CAMERA" />
-
-    <!--작업 세션 중에 WiFi를 활성화 및 비활성화하는 데 사용됩니다. (뽀모도로 타이머)-->
+    <uses-permission android:name="android.permission.CAMERA" /> <!-- 작업 세션 중에 WiFi를 활성화 및 비활성화하는 데 사용됩니다. (뽀모도로 타이머) -->
     <!-- Used to enable and disable WiFi during work sessions -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 소켓 통신을 위한 와이파이 연결상태 체크 권한 -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 소켓 통신을 위한 네트워크 연결상태 체크 권한 -->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
-    <uses-permission android:name="android.permission.DIAL_PHONE" />
-
-    <!--Google 측에 버그가있을 수 있으므로 다음을 제거하십시오. (뽀모도로 타이머)-->
+    <uses-permission android:name="android.permission.DIAL_PHONE" /> <!-- Google 측에 버그가있을 수 있으므로 다음을 제거하십시오. (뽀모도로 타이머) -->
     <!-- There might be a bug on Google's side so remove the following -->
     <uses-permission
         android:name="android.permission.RECEIVE_SMS"
@@ -45,51 +42,59 @@
         tools:node="remove" />
     <uses-permission
         android:name="android.permission.PROCESS_OUTGOING_CALLS"
-        tools:node="remove" />
-
-    <!--작업 세션 중에 사운드를 활성화 및 비활성화하는 데 사용됩니다. (뽀모도로 타이머)-->
-    <!--Used to enable and disable sound during work sessions-->
+        tools:node="remove" /> <!-- 작업 세션 중에 사운드를 활성화 및 비활성화하는 데 사용됩니다. (뽀모도로 타이머) -->
+    <!-- Used to enable and disable sound during work sessions -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" />
-    <uses-permission android:name="android.permission.VIBRATE" />
-
-    <!--세션이 끝나면 화면을 깨우는 데 사용됩니다. (뽀모도로 타이머)-->
+    <uses-permission android:name="android.permission.VIBRATE" /> <!-- 세션이 끝나면 화면을 깨우는 데 사용됩니다. (뽀모도로 타이머) -->
     <!-- Used to wake the screen when a session is finished -->
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-
-    <!--Android P 이상에서 타이머 전경 서비스에 사용됩니다. (뽀모도로 타이머)-->
+    <uses-permission android:name="android.permission.WAKE_LOCK" /> <!-- Android P 이상에서 타이머 전경 서비스에 사용됩니다. (뽀모도로 타이머) -->
     <!-- Used on Android P and later for the timer foreground service -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!--배터리 최적화에서 앱을 제거하는 옵션-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 배터리 최적화에서 앱을 제거하는 옵션 -->
     <!-- For the option of removing the app from the battery optimization -->
-    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" /> <!-- opencv camera 관련 퍼미션 -->
+    <uses-permission android:name="android.permission.CAMERA" />
 
-
-    <!--opencv camera 관련 퍼미션-->
-
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-feature android:name="android.hardware.camera" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.autofocus" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front" android:required="false"/>
-    <uses-feature android:name="android.hardware.camera.front.autofocus"  android:required="false"/>
-
-    <!--    기기마다 화면 사이즈가 다르기 때문에
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.autofocus"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.camera.front.autofocus"
+        android:required="false" />
+    <!--
+    기기마다 화면 사이즈가 다르기 때문에
         다양한 사이즈의 스크린에 적절하게 어플리케이션이
         표시될 수 있도록 화면 사이즈를 조절해주는 부분이다.
-        기본적으로 '참'값을 가진다-->
-
-    <supports-screens android:resizeable="true"
-        android:smallScreens="true"
-        android:normalScreens="true"
+        기본적으로 '참'값을 가진다
+    -->
+    <supports-screens
+        android:anyDensity="true"
         android:largeScreens="true"
-        android:anyDensity="true" />
+        android:normalScreens="true"
+        android:resizeable="true"
+        android:smallScreens="true" /> <!-- appRTC -->
+    <uses-feature
+        android:glEsVersion="0x00020000"
+        android:required="true" />
 
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission
+        android:name="android.permission.CAPTURE_VIDEO_OUTPUT"
+        tools:ignore="ProtectedPermissions" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
-        android:theme="@style/AppTheme"
-        android:allowBackup="true"
         android:name=".Pomodoro.BL.GoodtimeApplication"
+        android:allowBackup="true"
         android:appComponentFactory="whateverString"
         android:icon="@drawable/logo_2"
         android:label="@string/app_namee"
@@ -97,41 +102,52 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:screenOrientation="portrait"
         android:supportsRtl="true"
+        android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning,InnerclassSeparator"
         tools:replace="android:appComponentFactory">
 
-        <activity android:name=".chat.Activity_ImageView"
-            android:theme="@style/AppTheme2"></activity>
+        <activity
+            android:noHistory="true"
+            android:name=".chat.Activity_Video_Receive"
+            android:theme="@style/AppTheme2"/>
+
+        <activity
+            android:name=".chat.Activity_ImageView"
+            android:theme="@style/AppTheme2" />
 
         <service
             android:name=".Service.MyService"
             android:enabled="true"
             android:exported="true" />
 
-        <activity android:name=".chat.Chat_Fragment_Manager"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".Activity_Review_List"
-            android:theme="@style/AppTheme2"/>
-        <activity android:name=".WorkUseManagement.Activity_Review_Detail"
-            android:theme="@style/AppTheme2"/>
+        <activity
+            android:name=".chat.Chat_Fragment_Manager"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".Activity_Review_List"
+            android:theme="@style/AppTheme2" />
+        <activity
+            android:name=".WorkUseManagement.Activity_Review_Detail"
+            android:theme="@style/AppTheme2" />
         <activity
             android:name=".WorkUseManagement.Review_Work"
             android:label="리뷰 작성"
-            android:theme="@style/AppTheme2"/>
+            android:theme="@style/AppTheme2" />
         <activity android:name=".chat.Activity_Chat_For_PC" />
-        <activity android:name=".chat.Activity_Chat_Main"
-            android:theme="@style/AppTheme2"/> <!-- 이용현황 -->
+        <activity
+            android:name=".chat.Activity_Chat_Main"
+            android:theme="@style/AppTheme2" /> <!-- 이용현황 -->
         <activity
             android:name=".WorkUseManagement.WorkUseManagement"
-            android:theme="@style/AppTheme2"
-            android:label="이용현황" /> <!-- 인트로 액티비티 -->
+            android:label="이용현황"
+            android:theme="@style/AppTheme2" /> <!-- 인트로 액티비티 -->
         <activity android:name=".Activity_Intro">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity> <!-- 예약 결제 액티비티 -->
-
         <activity
             android:name=".Activity_Reservation_Web_View"
             android:launchMode="singleTask"
@@ -148,9 +164,9 @@
             </intent-filter>
         </activity> <!-- 예약 페이지 -->
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".Activity_Work_Reservation"
-            android:label="예약 중" /> <!-- 인트로 액티비티 -->
+            android:label="예약 중"
+            android:theme="@style/AppTheme2" /> <!-- 인트로 액티비티 -->
         <!-- 회원가입 액티비티 -->
         <activity
             android:name=".Activity_Register"
@@ -173,99 +189,120 @@
             android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
             android:theme="@style/Base.Theme.AppCompat" /> <!-- optional (needed if default theme has no action bar) -->
         <!-- 홈 액티비티 -->
-        <activity android:name=".Activity_Home"
-            android:theme="@style/AppTheme2"/> <!-- 호스트 등록 액티비티 -->
+        <activity
+            android:name=".Activity_Home"
+            android:theme="@style/AppTheme2" /> <!-- 호스트 등록 액티비티 -->
         <activity
             android:name=".Activity_hostRegist"
-            android:theme="@style/AppTheme2"
-            android:parentActivityName=".Activity_Home" /> <!-- 사무실 등록 액티비티 -->
+            android:parentActivityName=".Activity_Home"
+            android:theme="@style/AppTheme2" /> <!-- 사무실 등록 액티비티 -->
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".Activity_hostAddWorkSpace"
             android:label="사업장 등록 (1/2)"
-            android:parentActivityName=".Activity_Home" /> <!-- 주소입력 웹뷰 -->
+            android:parentActivityName=".Activity_Home"
+            android:theme="@style/AppTheme2" /> <!-- 주소입력 웹뷰 -->
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".Activity_DaumWebView"
             android:label="주소를 입력하세요."
-            android:parentActivityName=".Activity_hostAddWorkSpace" /> <!-- 사무실 등록 액티비티 2 -->
+            android:parentActivityName=".Activity_hostAddWorkSpace"
+            android:theme="@style/AppTheme2" /> <!-- 사무실 등록 액티비티 2 -->
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".Activity_hostAddWorkSpace_2"
             android:label="사업장 등록 (2/2)"
-            android:parentActivityName=".Activity_hostAddWorkSpace" /> <!-- 사무실 자세히 보기 -->
+            android:parentActivityName=".Activity_hostAddWorkSpace"
+            android:theme="@style/AppTheme2" /> <!-- 사무실 자세히 보기 -->
         <activity
-            android:theme="@style/AppTheme2"
             android:name=".Activity_WorkSpace_Detail_Info"
-            android:parentActivityName=".Activity_Home" /> <!-- 채팅방 액티비티 -->
+            android:parentActivityName=".Activity_Home"
+            android:theme="@style/AppTheme2" /> <!-- 채팅방 액티비티 -->
         <activity
             android:theme="@style/AppTheme2"
             android:name=".chat.Activity_ChatRoom"
             android:parentActivityName=".Activity_Home"
-            android:windowSoftInputMode="adjustResize" />
-
-        <!--뽀모도로 타이머-->
-
+            android:windowSoftInputMode="adjustResize" /> <!-- 뽀모도로 타이머 -->
         <activity
             android:name=".Pomodoro.Main.TimerActivity"
             android:label="@string/settings"
             android:showOnLockScreen="true"
-            android:theme="@style/AppTheme"></activity>
-
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".Pomodoro.Settings.SettingsActivity"
             android:label="@string/settings"
-            android:parentActivityName=".Pomodoro.Main.TimerActivity"></activity>
-
+            android:parentActivityName=".Pomodoro.Main.TimerActivity" />
         <activity
             android:name=".Pomodoro.About.AboutActivity"
             android:label="@string/about"
             android:parentActivityName=".Pomodoro.Main.TimerActivity"
-            android:theme="@style/AboutTheme"></activity>
-
+            android:theme="@style/AboutTheme" />
         <activity
             android:name=".Pomodoro.About.LicencesActivity"
             android:label="@string/about_open_source_licences"
             android:parentActivityName=".Pomodoro.About.AboutActivity"
-            android:theme="@style/AboutTheme"></activity>
-
+            android:theme="@style/AboutTheme" />
         <activity
             android:name=".Pomodoro.Statistics.Main.StatisticsActivity"
             android:label="@string/statistics"
-            android:parentActivityName=".Pomodoro.Main.TimerActivity"></activity>
-
+            android:parentActivityName=".Pomodoro.Main.TimerActivity" />
         <activity
             android:name=".Pomodoro.Main.AddEditLabelActivity"
             android:label="@string/label_dialog_edit"
-            android:parentActivityName=".Pomodoro.Main.TimerActivity"></activity>
-
+            android:parentActivityName=".Pomodoro.Main.TimerActivity" />
         <activity
             android:name=".Pomodoro.Main.MainIntroActivity"
             android:parentActivityName=".Pomodoro.Main.TimerActivity"
-            android:theme="@style/Theme.Intro"></activity>
+            android:theme="@style/Theme.Intro" />
 
         <service
-            android:name="com.example.hun73.seac_apply_ver2.Pomodoro.BL.TimerService"
+            android:name=".Pomodoro.BL.TimerService"
             android:enabled="true"
             android:exported="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.hun73.seac_apply_ver2"
-            tools:replace="android:authorities"
             android:exported="false"
-            android:grantUriPermissions="true">
+            android:grantUriPermissions="true"
+            tools:replace="android:authorities">
             <meta-data
-                tools:replace = "android:resource"
                 android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths"/>
+                android:resource="@xml/file_paths"
+                tools:replace="android:resource" />
         </provider>
 
         <activity
             android:name=".ActivityOpenCvCamera"
-            android:screenOrientation="portrait"
-            android:configChanges="keyboardHidden|orientation"/>
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait" /> <!-- appRTC -->
+        <activity
+            android:name=".appRTC.ConnectActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="adjustPan">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="appr.tc"
+                    android:scheme="https" />
+                <data
+                    android:host="appr.tc"
+                    android:scheme="http" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".appRTC.SettingsActivity"
+            android:label="@string/settings_name"
+            android:theme="@style/CallActivityTheme" />
+
+        <activity
+            android:name=".appRTC.CallActivity"
+            android:configChanges="orientation|smallestScreenSize|screenSize|screenLayout"
+            android:label="@string/app_name"
+            android:screenOrientation="fullUser"
+            android:theme="@style/CallActivityTheme" />
     </application>
 
 </manifest>

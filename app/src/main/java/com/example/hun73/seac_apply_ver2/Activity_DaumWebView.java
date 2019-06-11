@@ -94,7 +94,7 @@ public class Activity_DaumWebView extends AppCompatActivity
                             Intent intent = new Intent(Activity_DaumWebView.this, Activity_hostAddWorkSpace.class);
 //                            intent.putExtra("address", String.format("(%s) %s %s", arg1, arg2, arg3));
                             intent.putExtra("address", String.format("(%s) %s %s", arg1, arg2, arg3));
-                            setResult(RESULT_OK,intent);
+                            setResult(RESULT_OK, intent);
 //                            startActivity(intent);
                             finish();
                         }

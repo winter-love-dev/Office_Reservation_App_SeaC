@@ -1,20 +1,35 @@
 package com.example.hun73.seac_apply_ver2;
 
 import android.annotation.TargetApi;
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.Canvas;
+import android.graphics.PixelFormat;
+import android.hardware.display.DisplayManager;
+import android.hardware.display.VirtualDisplay;
+import android.media.Image;
+import android.media.ImageReader;
+import android.media.projection.MediaProjection;
+import android.media.projection.MediaProjectionManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.OrientationEventListener;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.opencv.android.BaseLoaderCallback;
 import org.opencv.android.CameraBridgeViewBase;
@@ -23,13 +38,19 @@ import org.opencv.android.OpenCVLoader;
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Point;
+import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.Semaphore;
 
 import androidx.annotation.NonNull;
@@ -42,7 +63,7 @@ public class ActivityOpenCvCamera extends AppCompatActivity
         implements CameraBridgeViewBase.CvCameraViewListener2
 {
     private static final String TAG = "opencv";
-//    private CameraBridgeViewBase mOpenCvCameraView;
+    //    private CameraBridgeViewBase mOpenCvCameraView;
     private CameraBridgeViewBase mOpenCvCameraView;
     private Mat matInput;
     private Mat matResult;
@@ -51,16 +72,22 @@ public class ActivityOpenCvCamera extends AppCompatActivity
     //    public native void ConvertRGBtoGray(long matAddrInput, long matAddrResult);
     public native long loadCascade(String cascadeFileName);
 
-    public native int detect(long cascadeClassifier_face,
-                             long cascadeClassifier_eye, long matAddrInput, long matAddrResult);
+    public native int detect_On(long cascadeClassifier_face,
+                                long cascadeClassifier_eye, long matAddrInput, long matAddrResult);
 
-    public native int detect2(long cascadeClassifier_face,
-                             long cascadeClassifier_eye, long matAddrInput, long matAddrResult);
+//    public native int detect_Mask_On(long cascadeClassifier_face,
+//                                long cascadeClassifier_eye, long matAddrInput, long matAddrResult);
+
+    public native int detect_Off(long cascadeClassifier_face,
+                                 long cascadeClassifier_eye, long matAddrInput, long matAddrResult);
+
+//    public native int putMask(Mat src, Point center, Size face_size);
 
     // 화면 방향 리스너 (카메라 방향을 세로로 돌리기 위한)
     private OrientationEventListener mOrientEventListener;
 
     public long cascadeClassifier_face = 0;
+    public long cascadeClassifier_face_mask = 0;
     public long cascadeClassifier_eye = 0;
     public long cascadeClassifier_logo = 0;
 
@@ -118,17 +145,18 @@ public class ActivityOpenCvCamera extends AppCompatActivity
     private void read_cascade_file()
     {
         copyFile("haarcascade_frontalface_alt2.xml");
-        copyFile("haarcascade_eye_tree_eyeglasses.xml");
-//        copyFile("drawable/logo_3_op_60.png");
-
-        Log.d(TAG, "read_cascade_file:");
+//        copyFile("haarcascade_eye_tree_eyeglasses.xml");
+//        copyFile("opencv_mask_5.jpg");
 
         cascadeClassifier_face = loadCascade("haarcascade_frontalface_alt2.xml");
 
         Log.d(TAG, "read_cascade_file:");
 
-        cascadeClassifier_eye = loadCascade("haarcascade_eye_tree_eyeglasses.xml");
+//        cascadeClassifier_eye = loadCascade("haarcascade_eye_tree_eyeglasses.xml");
+//
+//        Log.d(TAG, "read_cascade_file:");
 
+//        cascadeClassifier_face_mask = loadCascade("opencv_mask_5.jpg");
 //        cascadeClassifier_logo = loadCascade("drawable/logo_3_op_60.png");
     }
 
@@ -152,7 +180,6 @@ public class ActivityOpenCvCamera extends AppCompatActivity
             }
         }
     };
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -192,7 +219,12 @@ public class ActivityOpenCvCamera extends AppCompatActivity
 
         mLoaderCallback.onManagerConnected(LoaderCallbackInterface.SUCCESS);
 
+
+//        imageView = (ImageView)this.findViewById(R.id.image_view);
+
+        // 캡쳐버튼
         Button button = (Button) findViewById(R.id.button);
+        button.setVisibility(View.GONE);
         button.setOnClickListener(new View.OnClickListener()
         {
             public void onClick(View v)
@@ -203,18 +235,19 @@ public class ActivityOpenCvCamera extends AppCompatActivity
 
                     File path = new File(Environment.getExternalStorageDirectory() + "/Images/");
                     path.mkdirs();
-                    File file = new File(path, "image.png");
+                    File file = new File(path, getTime() + ".png");
 
                     String filename = file.toString();
 
                     Imgproc.cvtColor(matResult, matResult, Imgproc.COLOR_BGR2RGB, 4);
-                    boolean ret = Imgcodecs.imwrite(filename, matResult);
-                    if (ret) Log.d(TAG, "SUCESS");
+                    boolean ret  = Imgcodecs.imwrite( filename, matResult);
+                    if ( ret ) Log.d(TAG, "SUCESS");
                     else Log.d(TAG, "FAIL");
 
-                    Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+                    Intent mediaScanIntent = new Intent( Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
                     mediaScanIntent.setData(Uri.fromFile(file));
                     sendBroadcast(mediaScanIntent);
+
                 } catch (InterruptedException e)
                 {
                     e.printStackTrace();
@@ -224,7 +257,23 @@ public class ActivityOpenCvCamera extends AppCompatActivity
             }
         });
     }
+    // todo: 스크린샷 시작
 
+    // 시간계산
+    long mNow;
+    Date mDate;
+
+    SimpleDateFormat mFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
+    // 현재시간 구하기
+    private String getTime()
+    {
+        mNow = System.currentTimeMillis();
+        mDate = new Date(mNow);
+        return mFormat.format(mDate);
+    }
+
+    // todo: 스크린샷 끝
     @Override
     public void onPause()
     {
@@ -286,15 +335,22 @@ public class ActivityOpenCvCamera extends AppCompatActivity
 
             if (matResult == null)
 
-//                matResult = new Mat(rows(가로), cols(세로), matInput.type());
-            matResult = new Mat(matInput.rows(), matInput.cols(), matInput.type());
+//             matResult = new Mat(rows(가로), cols(세로), matInput.type());
+                matResult = new Mat(matInput.rows(), matInput.cols(), matInput.type());
 
+            // 카메라 세로회전
             Mat rotImage = Imgproc.getRotationMatrix2D(new Point(matInput.cols() / 2, matInput.rows() / 2), 90, 1.0);
             Imgproc.warpAffine(matInput, matInput, rotImage, matInput.size());
             Imgproc.warpAffine(mGray, mGray, rotImage, matInput.size());
 
-//             Core.flip(원본 이미지, 실행된 flip이 저장될 이미지, 각종 flip);
+            // Core.flip(원본 이미지, 실행된 flip이 저장될 이미지, 각종 flip);
             Core.flip(matInput, matInput, 1);
+
+            // 카메라 세로회전
+            // mRgba = mRgba.t();
+            // mGray = mGray.t();//(288,352)
+            // Core.flip(mRgba, mRgba, 1);
+            // Core.flip(mGray, mGray, 1);//(288,352)
 
             // 안면인식 버튼
             Button button = findViewById(R.id.button_detect);
@@ -322,15 +378,17 @@ public class ActivityOpenCvCamera extends AppCompatActivity
             if (i == 0)
             {
                 // 안면인식 비활성
-                int ret = detect2(cascadeClassifier_face, cascadeClassifier_eye, matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+                int ret = detect_Off(cascadeClassifier_face, cascadeClassifier_eye, matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+//                int ret2 = detect_Mask_On(cascadeClassifier_face_mask, cascadeClassifier_eye, matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+
                 if (ret != 0)
                     Log.d(TAG, "face " + ret + " found");
-            }
+//                    Log.d(TAG, "face " + ret2 + " found");
 
-            else if (i == 1)
+            } else if (i == 1)
             {
                 // 안면인식 활성
-                int ret = detect(cascadeClassifier_face, cascadeClassifier_eye, matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
+                int ret = detect_On(cascadeClassifier_face, cascadeClassifier_eye, matInput.getNativeObjAddr(), matResult.getNativeObjAddr());
 
                 if (ret != 0)
                     Log.d(TAG, "face " + ret + " found");

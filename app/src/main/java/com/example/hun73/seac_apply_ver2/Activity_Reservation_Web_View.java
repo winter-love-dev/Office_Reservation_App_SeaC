@@ -82,7 +82,6 @@ public class Activity_Reservation_Web_View extends AppCompatActivity
 
                 startActivity(intent);
                 finish();
-
             }
         });
 

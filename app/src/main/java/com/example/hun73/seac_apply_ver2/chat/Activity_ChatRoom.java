@@ -1,6 +1,10 @@
 package com.example.hun73.seac_apply_ver2.chat;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -8,14 +12,18 @@ import android.net.Uri;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
+
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.appcompat.widget.Toolbar;
+
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -46,6 +54,8 @@ import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.RecyclerView.Chat_Item_Room_List;
 import com.example.hun73.seac_apply_ver2.RecyclerView.chattingMessageContent;
 import com.example.hun73.seac_apply_ver2.SessionManager;
+import com.example.hun73.seac_apply_ver2.appRTC.CallActivity;
+import com.example.hun73.seac_apply_ver2.appRTC.ConnectActivity;
 import com.example.hun73.seac_apply_ver2.homeNavigationPager.Fragment_Home_Menu_3;
 import com.squareup.picasso.Picasso;
 import com.theartofdev.edmodo.cropper.CropImage;
@@ -72,6 +82,8 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static com.example.hun73.seac_apply_ver2.appRTC.ConnectActivity.roomEditText;
 
 public class Activity_ChatRoom extends AppCompatActivity
 {
@@ -107,7 +119,7 @@ public class Activity_ChatRoom extends AppCompatActivity
 
     // 내 아이디, 내 이름.
     // 액티비티가 onCreate 실행하면
-    String loginUserId;
+    public static String loginUserId;
     String loginUserNick;
 
     // 회원정보를 담은 세션 선언.
@@ -133,8 +145,13 @@ public class Activity_ChatRoom extends AppCompatActivity
     // 4사 192.168.0.144
     // starbucks 172.30.18.125
 
-    String ipad2 = "192.168.0.184";
-//    String ipad2 = "192.168.0.144"; // 4사
+//    String ipad2 = "192.168.0.184";
+
+//    String ipad2 = "192.168.43.50"; // 갤럭시 노트 5 핫스팟
+    String ipad2 = "172.30.1.49"; // 8사
+//    String ipad2 = "192.168.1.10"; // 1사
+
+//    String ipad2 = "192.168.0.86"; // 4사
     int port = 12346;
 
     // 메시지 전송 스레드
@@ -160,11 +177,15 @@ public class Activity_ChatRoom extends AppCompatActivity
     // 읽음표시
     public int ViewsReceive;
 
+    public static Activity activity_chatroom;
+
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity__chat_room);
+
+        activity_chatroom = Activity_ChatRoom.this;
 
         messageData = new ArrayList<>();
 
@@ -215,28 +236,136 @@ public class Activity_ChatRoom extends AppCompatActivity
         setSendBtn();
     }
 
-    // 이미지 전송버튼
-    private void setImgSendBtn()
+    // 이미지, 영상통화 다이얼로그
+    private void OtherTaskDialog()
     {
-        select_image = findViewById(R.id.select_image);
+        AlertDialog.Builder OtherChatTask = new AlertDialog.Builder(this);
 
-        select_image.setOnClickListener(new View.OnClickListener()
+//        Log.e(TAG, "onClick: view.setOnClickListener: " + ID_UserIndex );
+
+        // 다이얼로그 세팅
+        OtherChatTask.setTitle("작업 선택");
+        OtherChatTask.setPositiveButton("사진전송",
+                new DialogInterface.OnClickListener()
+                {
+                    @SuppressLint("LongLogTag")
+                    @Override
+                    public void onClick(DialogInterface dialog, int which)
+                    {
+                        // 이미지 크로퍼 실행
+                        CropImage.activity() // 크롭하기 위한 이미지를 가져온다.
+                                .setGuidelines(CropImageView.Guidelines.ON) // 이미지를 크롭하기 위한 도구 ,Guidelines를
+                                .start(Activity_ChatRoom.this); // 실행한다.
+                    }
+                })
+                .setNegativeButton("영상통화",
+                        new DialogInterface.OnClickListener()
+                        {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which)
+                            {
+                                // 상대방에게 영상통화 요청하기
+                                VideoChatRequest();
+                            }
+                        });
+
+        final AlertDialog edit_dialog = OtherChatTask.create();
+        edit_dialog.setOnShowListener(new DialogInterface.OnShowListener() // 다이얼로그 색상 설정
         {
             @Override
-            public void onClick(View v)
+            public void onShow(DialogInterface arg0)
             {
-                // 이미지 크로퍼 실행
-                CropImage.activity() // 크롭하기 위한 이미지를 가져온다.
-                        .setGuidelines(CropImageView.Guidelines.ON) // 이미지를 크롭하기 위한 도구 ,Guidelines를
-                        .start(Activity_ChatRoom.this); // 실행한다.
+                edit_dialog.getButton(AlertDialog.BUTTON_NEGATIVE).setTextColor(Color.BLACK);
+
+                edit_dialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(Color.BLACK);
             }
         });
+        edit_dialog.show(); // 다이얼로그 실행
+        // 다이얼로그 끝
+    }
+
+    //        ConnectActivity connectActivity = new ConnectActivity();
+//        // 내 아이디로 채널 생성함
+//        connectActivity.connectToRoom(roomEditText.getText().toString(), false, false, false, 0);
+
+    // todo: 영상통화 요청하기
+    // 1. A가 테이블 유저 인덱스로 영상통화 채널을 생성합니다.
+    // 2. A는 자신이 생성한 영상통화 채널로 입장 후 B에게 영상통화 요청과 채널명을 전송합니다.
+    // 3. 영상통화 요청을 받은 B는 영상통화 수신 화면을 띄웁니다.
+    // 4. B가 영상통화 수신 화면에서 '수락' 버튼을 누르면 전송받은 채널명으로 입장합니다.
+    // 5. B가 영상통화 수신 하면에서 '거절' 버튼을 누르면 상대방에게 거절 신호를 보냅니다.
+    // 6. 거절 신호를 받은 A는 현재 머물러 있는 채널을 종료합니다.
+    private void VideoChatRequest()
+    {
+        // todo a. 내 아이디를 connect 액티비티로 전달한다.
+
+        // todo c. 상대방에게 영상통화 요청 메시지를 전송한다.
+        String message = "video_chat_request_code_1";
+        Log.e(TAG, "영상통화 요청함");
+
+        // code_1: 영상통화 해요
+        // code_2: 영상통화 종료
+        // code_3: 영상통화 거절
+        Log.e(TAG, "setSendBtn: loginUserId: " + loginUserId + " / loginUserNick: " + loginUserNick);
+
+        messageContent = null;
+        //                                          모드, 수신인     , 발신인       , 메시지 유형, 내용   , 전송시간, 안 읽은 사람, 참여자 수
+        messageContent = new chattingMessageContent(1, loginUserId, loginUserNick, "3", message, time, Message_views);
+
+        // 내 메시지 목록에 추가
+        messageData.add(messageContent);
+//                    chattingRoomAdapter.notifyDataSetChanged();
+        message_area.smoothScrollToPosition(messageData.size());
+
+        // todo: mysql에 메시지 저장하기
+        // RoomNo getId MType Mode Message JoinNo Views
+        updateMessage(
+                RoomNo,
+                loginUserId, // 내 아이디로 방 생성
+                "3", // 영상통화
+                message,
+                "2",
+                "1",
+                time);
+
+        Log.e(TAG, "onClick: updateMessage(): " +
+                "\nRoomNo: " + RoomNo + "" +
+                "\n / loginUserId: " + loginUserId + "" +
+                "\n / message: " + message + "" +
+                "\n / time: " + time);
+
+        Log.e(TAG, " ");
+
+        Type = "3";
+        // 소켓 서버로 영상통화 신호 보내주기
+        send = new SendThread(socket, message);
+        Log.e(TAG, " ===== SendThread ===== ");
+        Log.e(TAG, " message: " + message);
+        Log.e(TAG, " socket: " + socket);
+        Log.e(TAG, " ===== ======= ===== ");
+        Log.e(TAG, " ");
+        send.start();
+
+        // 채팅 입력창 비워주기
+        message_content.setText(null);
+
+        // 방 목록 갱신하기
+        ChatRoomList_Request();
+
+        // todo b. connect 액티비티에서 내 아이디디로 방을 생성한다.
+        Intent intent = new Intent(Activity_ChatRoom.this, ConnectActivity.class);
+        intent.putExtra("loginId", loginUserId);
+        intent.putExtra("call", "call");
+        startActivity(intent);
+
+        // todo d. '메시지목록 리사이클러뷰'에서 메시지 유형을 영상통화 전용 말풍선으로 바꾸자. 리사이클러뷰로 이동!
+
+        return;
     }
 
     Uri filePath;
     Bitmap bitmap;
 
-    // 선택한 이미지 불러오기
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data)
     {
@@ -248,6 +377,7 @@ public class Activity_ChatRoom extends AppCompatActivity
 
             if (resultCode == RESULT_OK && result != null)
             {
+                // todo: 선택한 이미지 불러오기
                 // 사진의 경로를 담는다
                 filePath = result.getUri();
                 try
@@ -279,9 +409,9 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                    chattingRoomAdapter.notifyDataSetChanged();
                     message_area.smoothScrollToPosition(messageData.size());
 
-                    // todo: 1. 서버로 이미지 저장한다.
+                    // todo: 1. 서버로 이미지를 저장한다.
                     // todo: 방금 저장한 이미지의 주소 불러오기 (이미지 주소 테이블에 저장하기)
-                    Log.e(TAG, "onActivityResult: filePath: " + filePath );
+                    Log.e(TAG, "onActivityResult: filePath: " + filePath);
 
                     bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), filePath);
 
@@ -295,6 +425,159 @@ public class Activity_ChatRoom extends AppCompatActivity
                     e.printStackTrace();
                 }
             }
+        }
+
+        // todo: 통화 종료신호 받기
+        if (resultCode == RESULT_CANCELED)
+        {
+            Log.e(TAG, "onActivityResult: 반환값 없음. 통화 종료!");
+
+            // 거절신호 보내기
+            // video_chat_request_code_1 요청
+            // video_chat_request_code_2 종료
+            // video_chat_request_code_3 거절
+            String message = "video_chat_request_code_2";
+
+            Type = "3"; // 타입 3 = 영상통화 타입
+            // 소켓 서버로 영상통화 신호 보내주기
+            send = new SendThread(socket, message);
+            Log.e(TAG, " ===== SendThread ===== ");
+            Log.e(TAG, " message: " + message);
+            Log.e(TAG, " socket: " + socket);
+            Log.e(TAG, " ===== ======= ===== ");
+            Log.e(TAG, " ");
+            send.start();
+
+            // todo: mysql에 메시지 저장하기
+            // RoomNo getId MType Mode Message JoinNo Views
+            updateMessage(
+                    RoomNo,
+                    loginUserId,
+                    "3", // 영상통화
+                    message,
+                    "2",
+                    "1",
+                    time);
+
+            messageContent = null;
+            //                                          모드, 수신인     , 발신인       , 메시지 유형, 내용   , 전송시간, 안 읽은 사람, 참여자 수
+            messageContent = new chattingMessageContent(1, loginUserId, loginUserNick, "3", message, time, Message_views);
+//                messageContent = new chattingMessageContent(1, targetID, targetNickName, "3", message, time, Message_views);
+
+            // 내 메시지 목록에 추가
+            messageData.add(messageContent);
+            message_area.smoothScrollToPosition(messageData.size());
+
+            Log.e(TAG, " ");
+
+            Log.e(TAG, "onClick: updateMessage(): " +
+                    "\nRoomNo: " + RoomNo + "" +
+                    "\n / loginUserId: " + loginUserId + "" +
+                    "\n / message: " + message + "" +
+                    "\n / time: " + time);
+
+            Log.e(TAG, " ");
+
+            // 채팅 입력창 비워주기
+            message_content.setText(null);
+
+            // 방 목록 갱신하기
+            ChatRoomList_Request();
+        }
+
+        // todo: 통화 거절신호 받기
+        // 통화 거절 신호 응답코드는 300임
+        else if (requestCode == 300)
+        {
+            Log.e(TAG, "onActivityResult: 통화 거절됨");
+
+            String call_refuse = data.getStringExtra("call_refuse");
+            Log.e(TAG, "onActivityResult: call_refuse: " + call_refuse );
+/*            if (call_refuse.equals("call_start"))
+            {
+                Intent intent = new Intent(Activity_ChatRoom.this, ConnectActivity.class);
+                intent.putExtra("loginId", targetID);
+                startActivity(intent);
+
+                Log.e(TAG, "onActivityResult: call_start");
+            }
+
+            else */if (call_refuse.equals("call_refuse"))
+            {
+                // 수신화면 종료
+                Activity_Video_Receive activity_video_receive = (Activity_Video_Receive) Activity_Video_Receive.Activity_Video_Receive;
+                activity_video_receive.finish();
+
+                // 거절신호 보내기
+                // video_chat_request_code_1 요청
+                // video_chat_request_code_2 종료
+                // video_chat_request_code_3 거절
+                String message = "video_chat_request_code_3";
+                Log.e(TAG, "영상통화 요청함");
+
+                Type = "3";
+                // 소켓 서버로 영상통화 신호 보내주기
+                send = new SendThread(socket, message);
+                Log.e(TAG, " ===== SendThread ===== ");
+                Log.e(TAG, " message: " + message);
+                Log.e(TAG, " socket: " + socket);
+                Log.e(TAG, " ===== ======= ===== ");
+                Log.e(TAG, " ");
+                send.start();
+
+                // todo: mysql에 메시지 저장하기
+                // RoomNo getId MType Mode Message JoinNo Views
+                updateMessage(
+                        RoomNo,
+                        loginUserId,
+                        "3", // 영상통화
+                        message,
+                        "2",
+                        "1",
+                        time);
+
+                messageContent = null;
+                //                                          모드, 수신인     , 발신인       , 메시지 유형, 내용   , 전송시간, 안 읽은 사람, 참여자 수
+                messageContent = new chattingMessageContent(1, loginUserId, loginUserNick, "3", message, time, Message_views);
+//                messageContent = new chattingMessageContent(1, targetID, targetNickName, "3", message, time, Message_views);
+
+                // 내 메시지 목록에 추가
+                messageData.add(messageContent);
+                message_area.smoothScrollToPosition(messageData.size());
+
+                Log.e(TAG, " ");
+
+                Log.e(TAG, "onClick: updateMessage(): " +
+                        "\nRoomNo: " + RoomNo + "" +
+                        "\n / loginUserId: " + loginUserId + "" +
+                        "\n / message: " + message + "" +
+                        "\n / time: " + time);
+
+                Log.e(TAG, " ");
+
+                // 채팅 입력창 비워주기
+                message_content.setText(null);
+
+                // 방 목록 갱신하기
+                ChatRoomList_Request();
+
+//              내 메시지 목록에 추가
+//              messageData.add(messageContent);
+//              chattingRoomAdapter.notifyDataSetChanged();
+//              message_area.smoothScrollToPosition(messageData.size());
+
+            // 방 목록 갱신하기
+//            ChatRoomList_Request();
+            }
+//            else
+//            {
+//                // 영상통화 페이지로 이동
+//                Intent intent = new Intent(Activity_ChatRoom.this, ConnectActivity.class);
+//                intent.putExtra("loginId", targetID);
+//                startActivity(intent);
+//
+//                Log.e(TAG, "onActivityResult: 영상통화 시작");
+//            }
         }
     }
 
@@ -608,11 +891,8 @@ public class Activity_ChatRoom extends AppCompatActivity
 
                             Log.e(TAG, "onResponse: jsonObject: " + jsonObject);
 
-                            // 가입이 완료되면 서버에서 success를 반환한다.
                             String success = jsonObject.getString("success");
 
-                            // 계정이 중복되면 서버에서 3을 반환한다
-                            // 중복결과 알리고 가입 중지
                             if (success.equals("1"))
                             {
 //                                Toast.makeText(Activity_ChatRoom.this, "전송완료", Toast.LENGTH_SHORT).show();
@@ -722,12 +1002,10 @@ public class Activity_ChatRoom extends AppCompatActivity
             {
                 // 채팅 서버로 메세지를 보내기 위한  스트림 생성.
                 output = new DataOutputStream(socket.getOutputStream());
-
             } catch (Exception e)
             {
                 e.printStackTrace();
             }
-
         }
 
         // 서버로 메세지 전송 ( 이클립스 서버단에서 temp 로 전달이 된다.
@@ -822,7 +1100,7 @@ public class Activity_ChatRoom extends AppCompatActivity
                         msgHandler.sendMessage(hdmg);
 
                         // 방 목록 갱신하기
-                        ChatRoomList_Request();
+//                        ChatRoomList_Request();
 
                         Log.e(TAG, "ReceiveThread: run()에서 onCreate의 핸들러로 메시지 전달함 ");
 
@@ -851,8 +1129,16 @@ public class Activity_ChatRoom extends AppCompatActivity
         // 불러온 유저의 정보 중 '유저 번호'를 아래 getId에 담기
         getId = user.get(sessionManager.ID);
 
-        // 이미지 전송버튼
-        setImgSendBtn();
+        select_image = findViewById(R.id.select_image);
+        select_image.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                // 다이얼로그 실행
+                OtherTaskDialog();
+            }
+        });
 
         // Volley로 서버 요청을 보내기 위해 데이터 세팅.
         StringRequest stringRequest = new StringRequest(Request.Method.POST, URL_READ,
@@ -981,8 +1267,56 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                                                Fragment_Home_Menu_3.slide_chat_list_adpater.notifyDataSetChanged();
 //                                                Fragment_Home_Menu_3.ChatRoomList_Request();
 
-                                                // 방 목록 갱신하기
-                                                ChatRoomList_Request();
+                                                // todo: 영상통화 감지하기
+                                                if (msgFilter[1].equals("video_chat_request_code_1"))
+                                                {
+                                                    Intent intent = new Intent(Activity_ChatRoom.this, Activity_Video_Receive.class);
+                                                    intent.putExtra("targetID", targetID); // 방번호
+                                                    intent.putExtra("targetNickName", targetNickName); // 상대 이름
+                                                    intent.putExtra("ReceiverPhoto", ReceiverPhoto); // 상대 사진
+                                                    startActivityForResult(intent, 300);
+                                                    Log.e(TAG, "handleMessage: 영상통화 감지됨");
+                                                }
+
+                                                //todo: 영상통화 거절 감지하기
+                                                if (msgFilter[1].equals("video_chat_request_code_3"))
+                                                {
+                                                    Log.e(TAG, "handleMessage: 통화 거절");
+
+                                                    // 영상통화 종료
+                                                    CallActivity callActivity = (CallActivity) CallActivity.callActivity;
+                                                    callActivity.finish();
+
+                                                    // todo c. 상대방에게 영상통화 요청 메시지를 전송한다.
+                                                    String message = "video_chat_request_code_3";
+
+                                                    Log.e(TAG, "setSendBtn: loginUserId: " + loginUserId + " / loginUserNick: " + loginUserNick);
+
+//                                                    messageContent = null;
+//                                                    //                                          모드, 수신인     , 발신인       , 메시지 유형, 내용   , 전송시간, 안 읽은 사람, 참여자 수
+//                                                    messageContent = new chattingMessageContent(1, loginUserId, loginUserNick, "3", message, time, Message_views);
+//
+//                                                    // 내 메시지 목록에 추가
+//                                                    messageData.add(messageContent);
+//                                                    message_area.smoothScrollToPosition(messageData.size());
+
+                                                    Log.e(TAG, " ");
+
+                                                    Log.e(TAG, "onClick: updateMessage(): " +
+                                                            "\nRoomNo: " + RoomNo + "" +
+                                                            "\n / loginUserId: " + loginUserId + "" +
+                                                            "\n / message: " + message + "" +
+                                                            "\n / time: " + time);
+
+                                                    Log.e(TAG, " ");
+
+                                                    // 채팅 입력창 비워주기
+                                                    message_content.setText(null);
+
+                                                    // 방 목록 갱신하기
+                                                    ChatRoomList_Request();
+                                                }
+
 
 
 //                                                Log.e(TAG, "handleMessage: messageData.add(messageContent)");
@@ -1164,16 +1498,14 @@ public class Activity_ChatRoom extends AppCompatActivity
                                 if (result.equals("You have already read"))
                                 {
                                     // 당신은 이미 읽었습니다.
-                                    Log.e(TAG, "onResponse: ViewsReceive: " + result );
-                                }
-                                else if (result.equals("All participants read"))
+                                    Log.e(TAG, "onResponse: ViewsReceive: " + result);
+                                } else if (result.equals("All participants read"))
                                 {
                                     // 모든 유저가 읽었습니다.
-                                    Log.e(TAG, "onResponse: ViewsReceive: " + result );
-                                }
-                                else if (result.equals("New Message read completed"))
+                                    Log.e(TAG, "onResponse: ViewsReceive: " + result);
+                                } else if (result.equals("New Message read completed"))
                                 {
-                                    ViewsReceive =- 1;
+                                    ViewsReceive = -1;
                                 }
                             }
 
@@ -1312,10 +1644,10 @@ public class Activity_ChatRoom extends AppCompatActivity
                     , Message_Type = currentItem.getMType()           // 메시지 타입
                     ;
 
-            Log.e(TAG, "onBindViewHolder: chat_user_id  : " + chat_user_id          );
-            Log.e(TAG, "onBindViewHolder: targetID      : " + targetID              );
-            Log.e(TAG, "onBindViewHolder: MType         : " + Message_Type          );
-            Log.e(TAG, "onBindViewHolder: Message       : " + chat_message_content  );
+            Log.e(TAG, "onBindViewHolder: chat_user_id  : " + chat_user_id);
+            Log.e(TAG, "onBindViewHolder: targetID      : " + targetID);
+            Log.e(TAG, "onBindViewHolder: MType         : " + Message_Type);
+            Log.e(TAG, "onBindViewHolder: Message       : " + chat_message_content);
 
             // 작성자 아이디와 상대방 아이디가 일치하면
             // 화면 왼 쪽에 메시지 띄우기
@@ -1328,6 +1660,7 @@ public class Activity_ChatRoom extends AppCompatActivity
                     chattingRoom_viewHolder.chat_user_photo.setVisibility(View.VISIBLE);
                     chattingRoom_viewHolder.chat_user_name.setVisibility(View.VISIBLE);
                     chattingRoom_viewHolder.time_receive.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.chat_message_content.setVisibility(View.VISIBLE);
 
                     // 0보다 작거나 같으면 읽음표시 숨기기
 //                    if (ViewsReceive == 0)
@@ -1340,10 +1673,11 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                        chattingRoom_viewHolder.views_receive.setVisibility(View.VISIBLE);
 //                    }
 
-                    // 전송시간, 이미지뷰 숨기기
+                    // 전송시간, 이미지뷰, 영상통화 말풍선 숨기기
                     chattingRoom_viewHolder.time_send.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_message_image.setVisibility(View.GONE);
-                    chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.GONE);
+//                    chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
 
 //            왼 쪽 표시   , 오른 표시
 //            ViewsReceive, views_send
@@ -1361,97 +1695,8 @@ public class Activity_ChatRoom extends AppCompatActivity
                             into(chattingRoom_viewHolder.chat_user_photo);
 
                     chattingRoom_viewHolder.chat_user_name.setText(chat_user_name);
-
                     chattingRoom_viewHolder.time_receive.setText(time_receive);
-
                     chattingRoom_viewHolder.chat_message_content.setText(chat_message_content);
-
-                    // TODO: 메시지 읽음표시하기
-                    // 해당 방에서 내가 읽지 않은 메시지를 조회한다.
-                    // 내가 읽지 않은 메시지가 있으면 읽음표시를 -1 한다.
-                    // 그 후 읽은 유저에 나를 포함시킨다
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://115.68.231.84/Chat_Message_View.php",
-//                            new Response.Listener<String>()
-//                            {
-//                                @Override
-//                                public void onResponse(String response)
-//                                {
-//                                    Log.e(TAG + "MessageViews()", "onResponse: response: " + response);
-//
-//                                    try
-//                                    {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//
-//                                        Log.e(TAG, "onResponse: jsonObject: " + jsonObject);
-//
-//                                        String success = jsonObject.getString("success");
-//
-//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                        String result = null;
-//
-//                                        if (success.equals("1"))
-//                                        {
-//                                            for (int i = 0; i < jsonArray.length(); i++)
-//                                            {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                                result = object.getString("notice").trim();
-//                                            }
-//
-//                                            if (result.equals("You have already read"))
-//                                            {
-//                                                // 당신은 이미 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//                                            }
-//                                            else if (result.equals("All participants read"))
-//                                            {
-//                                                // 모든 유저가 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//
-//                                            }
-//                                            else if (result.equals("New Message read completed"))
-//                                            {
-//                                                ViewsReceive =- 1;
-//                                                chattingRoom_viewHolder.views_receive.setText(String.valueOf(ViewsReceive));
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//                                            }
-//                                        }
-//
-//                                    } catch (JSONException e)
-//                                    {
-//                                        e.printStackTrace();
-//                                        Toast.makeText(Activity_ChatRoom.this, "문제발생." + e.toString(), Toast.LENGTH_SHORT).show();
-//                                        Log.e(TAG, "onResponse: JSONException e: " + e.toString());
-//                                    }
-//
-//                                }
-//                            },
-//                            new Response.ErrorListener()
-//                            {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error)
-//                                {
-//                                    Toast.makeText(Activity_ChatRoom.this, "문제발생." + error.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                    {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError
-//                        {
-//                            Map<String, String> params = new HashMap<>();
-//                            params.put("getId", getId);
-//                            params.put("RoomNo", RoomNo);
-////                                                    WorkDBIndex http://115.68.231.84/Question_addList.php
-//                            return params;
-//                        }
-//                    };
-//
-//                    RequestQueue requestQueue = Volley.newRequestQueue(Activity_ChatRoom.this);
-//                    requestQueue.add(stringRequest);
-
                 }
 
                 // 메시지 타입이 '2'일 경우 이미지 메시지
@@ -1477,16 +1722,17 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                        chattingRoom_viewHolder.views_receive.setVisibility(View.VISIBLE);
 //                    }
 
-                    // 전송시간, 텍스트뷰 숨기기
+                    // 전송시간, 텍스트뷰, 영상통화 말풍선 숨기기
                     chattingRoom_viewHolder.time_send.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_message_content.setVisibility(View.GONE);
-                    chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.GONE);
+//                    chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
 
                     // 말풍선 색상을 수신모드로 바꾸기.
                     // 1. 말풍선의 위치를 왼 쪽으로 배치한다.
                     // 2. 말풍선 색상을 전송모드로 바꾸기.
                     chattingRoom_viewHolder.message_gravity.setGravity(Gravity.LEFT);
+                    chattingRoom_viewHolder.chat_message_content.setBackgroundResource(R.drawable.item_chat_type_2);
 
                     // 수신받은 이미지
                     Picasso.get().load(chat_message_content).
@@ -1516,91 +1762,64 @@ public class Activity_ChatRoom extends AppCompatActivity
                     chattingRoom_viewHolder.chat_user_name.setText(chat_user_name);
 
                     chattingRoom_viewHolder.time_receive.setText(time_receive);
+                }
 
-                    // TODO: 메시지 읽음표시하기
-                    // 해당 방에서 내가 읽지 않은 메시지를 조회한다.
-                    // 내가 읽지 않은 메시지가 있으면 읽음표시를 -1 한다.
-                    // 그 후 읽은 유저에 나를 포함시킨다
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://115.68.231.84/Chat_Message_View.php",
-//                            new Response.Listener<String>()
-//                            {
-//                                @Override
-//                                public void onResponse(String response)
-//                                {
-//                                    Log.e(TAG + "MessageViews()", "onResponse: response: " + response);
-//
-//                                    try
-//                                    {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//
-//                                        Log.e(TAG, "onResponse: jsonObject: " + jsonObject);
-//
-//                                        String success = jsonObject.getString("success");
-//
-//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                        String result = null;
-//
-//                                        if (success.equals("1"))
-//                                        {
-//                                            for (int i = 0; i < jsonArray.length(); i++)
-//                                            {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                                result = object.getString("notice").trim();
-//                                            }
-//
-//                                            if (result.equals("You have already read"))
-//                                            {
-//                                                // 당신은 이미 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//                                            }
-//                                            else if (result.equals("All participants read"))
-//                                            {
-//                                                // 모든 유저가 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//                                            }
-//                                            else if (result.equals("New Message read completed"))
-//                                            {
-//                                                ViewsReceive =- 1;
-//                                                chattingRoom_viewHolder.views_receive.setText(String.valueOf(ViewsReceive));
-//                                                chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
-//                                            }
-//                                        }
-//
-//                                    } catch (JSONException e)
-//                                    {
-//                                        e.printStackTrace();
-//                                        Toast.makeText(Activity_ChatRoom.this, "문제발생." + e.toString(), Toast.LENGTH_SHORT).show();
-//                                        Log.e(TAG, "onResponse: JSONException e: " + e.toString());
-//                                    }
-//
-//                                }
-//                            },
-//                            new Response.ErrorListener()
-//                            {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error)
-//                                {
-//                                    Toast.makeText(Activity_ChatRoom.this, "문제발생." + error.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                    {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError
-//                        {
-//                            Map<String, String> params = new HashMap<>();
-//                            params.put("getId", getId);
-//                            params.put("RoomNo", RoomNo);
-////                                                    WorkDBIndex http://115.68.231.84/Question_addList.php
-//                            return params;
-//                        }
-//                    };
-//
-//                    RequestQueue requestQueue = Volley.newRequestQueue(Activity_ChatRoom.this);
-//                    requestQueue.add(stringRequest);
+                // 메시지 타입이 '3'일 경우 영상통화
+                else if (Message_Type.equals("3"))
+                {
+                    Log.e(TAG, "onBindViewHolder: 영상통화 수신받음");
+
+                    // 영상통화 말풍선, 영상통화 내용, 이름, 수신 시간 활성화
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.chat_user_name.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.time_receive.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.chat_message_image.setVisibility(View.VISIBLE);
+
+                    // 상대방 사진, 이름, 상대방의 수신 시간, 활성화
+                    chattingRoom_viewHolder.chat_user_photo.setVisibility(View.VISIBLE);
+//                    chattingRoom_viewHolder.chat_user_name.setVisibility(View.VISIBLE);
+//                    chattingRoom_viewHolder.time_receive.setVisibility(View.VISIBLE);
+
+                    // chat_video_visibility
+                    // chat_video_text_view
+
+                    // 전송시간, 텍스트뷰, 이미지뷰 숨기기
+                    chattingRoom_viewHolder.time_send.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_message_content.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_message_image.setVisibility(View.GONE);
+
+                    // 말풍선 색상을 수신모드로 바꾸기.
+                    // 1. 말풍선의 위치를 왼 쪽으로 배치한다.
+                    // 2. 말풍선 색상을 전송모드로 바꾸기.
+                    chattingRoom_viewHolder.message_gravity.setGravity(Gravity.LEFT);
+//                    chattingRoom_viewHolder.chat_message_content.setBackgroundResource(R.drawable.item_chat_type_2);
+                    chattingRoom_viewHolder.chat_video_visibility.setBackgroundResource(R.drawable.item_chat_type_2);
+
+                    // 유저 이미지
+                    Picasso.get().load(ReceiverPhoto).
+                            placeholder(R.drawable.logo_2).
+                            resize(30, 30).
+                            into(chattingRoom_viewHolder.chat_user_photo);
+
+
+                    chattingRoom_viewHolder.chat_user_name.setText(chat_user_name);
+                    chattingRoom_viewHolder.time_receive.setText(time_receive);
+
+                    if (chat_message_content.equals("video_chat_request_code_1"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 해요");
+                    } else if (chat_message_content.equals("video_chat_request_code_2"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 종료 _ ");
+                    } else if (chat_message_content.equals("video_chat_request_code_3"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 거절 !");
+//                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 종료 _ ");
+                    }
+                    // else if code_4 = 응답없음
+
+                    Log.e(TAG, "onBindViewHolder: chat_message_content: " + chat_message_content);
+
                 }
 
                 Log.e(TAG, " ");
@@ -1614,13 +1833,14 @@ public class Activity_ChatRoom extends AppCompatActivity
 
             // 작성자 아이디와 상대방 아이디가 일치하지 않으면
             // 화면 오른쪽에 메시지 띄우기
-            else
+            else if (chat_user_id.equals(loginUserId))
             {
                 // 메시지 타입이 '1'일 경우 텍스트 메시지
                 if (Message_Type.equals("1"))
                 {
-                    // 전송시간, 읽음표시 활성화
+                    // 전송시간 활성화
                     chattingRoom_viewHolder.time_send.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.chat_message_content.setVisibility(View.VISIBLE);
 
                     // 0보다 작거나 같으면 읽음표시 숨기기
 //                    if (ViewsReceive == 0)
@@ -1633,11 +1853,12 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                        chattingRoom_viewHolder.views_send.setVisibility(View.VISIBLE);
 //                    }
 
-                    // 사진, 이름, 수신 시간, 이미지뷰 비활성화
+                    // 사진, 이름, 수신 시간, 이미지뷰, 영상통화 말풍선 비활성화
                     chattingRoom_viewHolder.chat_user_photo.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_user_name.setVisibility(View.GONE);
                     chattingRoom_viewHolder.time_receive.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_message_image.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.GONE);
 //                    chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
 
                     // 1. 말풍선의 위치를 오른쪽으로 배치한다.
@@ -1648,91 +1869,6 @@ public class Activity_ChatRoom extends AppCompatActivity
                     // 내용, 보낸 시간
                     chattingRoom_viewHolder.chat_message_content.setText(chat_message_content);
                     chattingRoom_viewHolder.time_send.setText(time_send);
-
-                    // TODO: 메시지 읽음표시하기
-                    // 해당 방에서 내가 읽지 않은 메시지를 조회한다.
-                    // 내가 읽지 않은 메시지가 있으면 읽음표시를 -1 한다.
-                    // 그 후 읽은 유저에 나를 포함시킨다
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://115.68.231.84/Chat_Message_View.php",
-//                            new Response.Listener<String>()
-//                            {
-//                                @Override
-//                                public void onResponse(String response)
-//                                {
-//                                    Log.e(TAG + "MessageViews()", "onResponse: response: " + response);
-//
-//                                    try
-//                                    {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//
-//                                        Log.e(TAG, "onResponse: jsonObject: " + jsonObject);
-//
-//                                        String success = jsonObject.getString("success");
-//
-//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                        String result = null;
-//
-//                                        if (success.equals("1"))
-//                                        {
-//                                            for (int i = 0; i < jsonArray.length(); i++)
-//                                            {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                                result = object.getString("notice").trim();
-//                                            }
-//
-//                                            if (result.equals("You have already read"))
-//                                            {
-//                                                // 당신은 이미 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-//                                            }
-//                                            else if (result.equals("All participants read"))
-//                                            {
-//                                                // 모든 유저가 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-//                                            }
-//                                            else if (result.equals("New Message read completed"))
-//                                            {
-//                                                ViewsReceive =- 1;
-//                                                chattingRoom_viewHolder.views_send.setText(String.valueOf(ViewsReceive));
-//                                                chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-//                                            }
-//                                        }
-//
-//                                    } catch (JSONException e)
-//                                    {
-//                                        e.printStackTrace();
-//                                        Toast.makeText(Activity_ChatRoom.this, "문제발생." + e.toString(), Toast.LENGTH_SHORT).show();
-//                                        Log.e(TAG, "onResponse: JSONException e: " + e.toString());
-//                                    }
-//
-//                                }
-//                            },
-//                            new Response.ErrorListener()
-//                            {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error)
-//                                {
-//                                    Toast.makeText(Activity_ChatRoom.this, "문제발생." + error.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                    {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError
-//                        {
-//                            Map<String, String> params = new HashMap<>();
-//                            params.put("getId", getId);
-//                            params.put("RoomNo", RoomNo);
-////                                                    WorkDBIndex http://115.68.231.84/Question_addList.php
-//                            return params;
-//                        }
-//                    };
-//
-//                    RequestQueue requestQueue = Volley.newRequestQueue(Activity_ChatRoom.this);
-//                    requestQueue.add(stringRequest);
                 }
 
                 // 메시지 타입이 '2'일 경우 이미지 메시지
@@ -1753,12 +1889,13 @@ public class Activity_ChatRoom extends AppCompatActivity
 //                        chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
 //                    }
 
-                    // 사진, 이름, 수신 시간, 텍스트뷰 비활성화
+                    // 사진, 이름, 수신 시간, 텍스트뷰, 영상통화 말풍선 비활성화
                     chattingRoom_viewHolder.chat_user_photo.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_user_name.setVisibility(View.GONE);
                     chattingRoom_viewHolder.time_receive.setVisibility(View.GONE);
                     chattingRoom_viewHolder.chat_message_content.setVisibility(View.GONE);
-                    chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.GONE);
+//                    chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
 
                     // 1. 말풍선의 위치를 오른쪽으로 배치한다.
                     // 2. 말풍선 색상을 전송모드로 바꾸기.
@@ -1788,93 +1925,46 @@ public class Activity_ChatRoom extends AppCompatActivity
                     });
 
                     chattingRoom_viewHolder.time_send.setText(time_send);
+                }
 
-                    // TODO: 메시지 읽음표시하기
-                    // 해당 방에서 내가 읽지 않은 메시지를 조회한다.
-                    // 내가 읽지 않은 메시지가 있으면 읽음표시를 -1 한다.
-                    // 그 후 읽은 유저에 나를 포함시킨다
-//                    StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://115.68.231.84/Chat_Message_View.php",
-//                            new Response.Listener<String>()
-//                            {
-//                                @Override
-//                                public void onResponse(String response)
-//                                {
-//                                    Log.e(TAG + "MessageViews()", "onResponse: response: " + response);
-//
-//                                    try
-//                                    {
-//                                        JSONObject jsonObject = new JSONObject(response);
-//
-//                                        Log.e(TAG, "onResponse: jsonObject: " + jsonObject);
-//
-//                                        String success = jsonObject.getString("success");
-//
-//                                        JSONArray jsonArray = jsonObject.getJSONArray("read");
-//
-//                                        String result = null;
-//
-//                                        if (success.equals("1"))
-//                                        {
-//                                            for (int i = 0; i < jsonArray.length(); i++)
-//                                            {
-//                                                JSONObject object = jsonArray.getJSONObject(i);
-//
-//                                                result = object.getString("notice").trim();
-//                                            }
-//
-//                                            if (result.equals("You have already read"))
-//                                            {
-//                                                // 당신은 이미 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                            }
-//
-//                                            else if (result.equals("All participants read"))
-//                                            {
-//                                                // 모든 유저가 읽었습니다.
-//                                                Log.e(TAG, "onResponse: ViewsReceive: " + result );
-//                                                chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-//                                            }
-//
-//                                            // 새 메시지를 모두 읽었습니다.
-//                                            else if (result.equals("New Message read completed"))
-//                                            {
-//                                                ViewsReceive =- 1;
-//                                                chattingRoom_viewHolder.views_send.setText(String.valueOf(ViewsReceive));
-//                                                chattingRoom_viewHolder.views_send.setVisibility(View.GONE);
-//                                            }
-//                                        }
-//
-//                                    } catch (JSONException e)
-//                                    {
-//                                        e.printStackTrace();
-//                                        Toast.makeText(Activity_ChatRoom.this, "문제발생." + e.toString(), Toast.LENGTH_SHORT).show();
-//                                        Log.e(TAG, "onResponse: JSONException e: " + e.toString());
-//                                    }
-//
-//                                }
-//                            },
-//                            new Response.ErrorListener()
-//                            {
-//                                @Override
-//                                public void onErrorResponse(VolleyError error)
-//                                {
-//                                    Toast.makeText(Activity_ChatRoom.this, "문제발생." + error.toString(), Toast.LENGTH_SHORT).show();
-//                                }
-//                            })
-//                    {
-//                        @Override
-//                        protected Map<String, String> getParams() throws AuthFailureError
-//                        {
-//                            Map<String, String> params = new HashMap<>();
-//                            params.put("getId", getId);
-//                            params.put("RoomNo", RoomNo);
-////                                                    WorkDBIndex http://115.68.231.84/Question_addList.php
-//                            return params;
-//                        }
-//                    };
-//
-//                    RequestQueue requestQueue = Volley.newRequestQueue(Activity_ChatRoom.this);
-//                    requestQueue.add(stringRequest);
+                // 메시지 타입이 '2'일 경우 이미지 메시지
+                else if (Message_Type.equals("3"))
+                {
+                    // 영상통화 말풍선 활성화
+                    chattingRoom_viewHolder.time_send.setVisibility(View.VISIBLE);
+                    chattingRoom_viewHolder.chat_video_visibility.setVisibility(View.VISIBLE);
+
+                    // 사진, 이름, 수신 시간,  비활성화
+                    chattingRoom_viewHolder.chat_user_photo.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_user_name.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.time_receive.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_message_image.setVisibility(View.GONE);
+                    chattingRoom_viewHolder.chat_message_content.setVisibility(View.GONE);
+//                    chattingRoom_viewHolder.views_receive.setVisibility(View.GONE);
+
+                    // 1. 말풍선의 위치를 오른쪽으로 배치한다.
+                    // 2. 말풍선 색상을 전송모드로 바꾸기.
+                    chattingRoom_viewHolder.message_gravity.setGravity(Gravity.RIGHT);
+                    chattingRoom_viewHolder.chat_video_visibility.setBackgroundResource(R.drawable.item_chat_type_1);
+
+                    // 보낸 시간
+                    chattingRoom_viewHolder.time_send.setText(time_send);
+
+                    // 내용
+                    if (chat_message_content.equals("video_chat_request_code_1"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 해요");
+                    } else if (chat_message_content.equals("video_chat_request_code_2"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 종료 _ ");
+                    } else if (chat_message_content.equals("video_chat_request_code_3"))
+                    {
+                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 거절 !");
+//                        chattingRoom_viewHolder.chat_video_text_view.setText("영상통화 종료 _ ");
+                    }
+                    // else if code_4 = 응답없음
+
+                    Log.e(TAG, "onBindViewHolder: chat_message_content: " + chat_message_content);
                 }
 
                 Log.e(TAG, " ");
@@ -1896,13 +1986,13 @@ public class Activity_ChatRoom extends AppCompatActivity
         {
             public View view;
 
-            public LinearLayout message_gravity;
+            public LinearLayout message_gravity, chat_video_visibility;
 
             public CircleImageView chat_user_photo;
 
             public TextView
                     chat_user_name, time_send, time_receive, chat_message_content,
-                    views_receive, views_send;
+            /*views_receive, views_send,*/ chat_video_text_view;
 
             public ImageView chat_message_image;
 
@@ -1910,8 +2000,8 @@ public class Activity_ChatRoom extends AppCompatActivity
             {
                 super(itemView);
                 view = itemView;
-                views_receive = itemView.findViewById(R.id.views_receive);
-                views_send = itemView.findViewById(R.id.views_send);
+//                views_receive = itemView.findViewById(R.id.views_receive);
+//                views_send = itemView.findViewById(R.id.views_send);
                 message_gravity = itemView.findViewById(R.id.message_gravity);
                 chat_user_photo = itemView.findViewById(R.id.chat_user_photo);
                 chat_user_name = itemView.findViewById(R.id.chat_user_name);
@@ -1919,6 +2009,8 @@ public class Activity_ChatRoom extends AppCompatActivity
                 time_receive = itemView.findViewById(R.id.time_receive);
                 chat_message_content = itemView.findViewById(R.id.chat_message_content);
                 chat_message_image = itemView.findViewById(R.id.chat_message_image);
+                chat_video_visibility = itemView.findViewById(R.id.chat_video_visibility);
+                chat_video_text_view = itemView.findViewById(R.id.chat_video_text_view);
             }
         }
     }

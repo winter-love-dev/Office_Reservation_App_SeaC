@@ -180,6 +180,28 @@ public class Fragment_Home_Menu_3 extends Fragment
                 slide_chat_list_viewHolder.slide_chat_last_message.setText(LastMessage);
             }
 
+            else if (MessageType.equals("3"))
+            {
+
+                if (LastMessage.equals("video_chat_request_code_1"))
+                {
+                    LastMessage = "영상통화";
+                }
+
+                else if (LastMessage.equals("video_chat_request_code_2"))
+                {
+                    LastMessage = "영상통화 종료";
+                }
+
+                else if (LastMessage.equals("video_chat_request_code_3"))
+                {
+//                    LastMessage = "영상통화 거절";
+                    LastMessage = "영상통화 종료";
+                }
+
+                slide_chat_list_viewHolder.slide_chat_last_message.setText(LastMessage);
+            }
+
 
             // 채팅방으로 이동하기
             slide_chat_list_viewHolder.view.setOnClickListener(new View.OnClickListener()

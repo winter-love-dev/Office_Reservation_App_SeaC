@@ -79,7 +79,7 @@
             android:id="@+id/select_image"
             android:padding="5dp"
             android:background="@color/white"
-            android:src="@drawable/ic_send_image"
+            android:src="@drawable/ic_add"
             android:layout_width="40dp"
             android:layout_height="50dp" />
 

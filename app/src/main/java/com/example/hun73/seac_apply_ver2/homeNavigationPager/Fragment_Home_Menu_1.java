@@ -28,6 +28,7 @@ import com.example.hun73.seac_apply_ver2.Activity_hostAddWorkSpace;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.TimerActivity;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.WorkUseManagement.WorkUseManagement;
+import com.example.hun73.seac_apply_ver2.appRTC.ConnectActivity;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -63,6 +64,7 @@ public class Fragment_Home_Menu_1 extends Fragment
             nav_activity_Chat,
             nav_activity_pomodoro_timer,
             nav_activity_opencv_camera,
+//            nav_activity_app_rtc,
             nav_use_guide,
             nav_count;
 
@@ -90,7 +92,7 @@ public class Fragment_Home_Menu_1 extends Fragment
         nav_activity_use_management = View_Home_Pager_1.findViewById(R.id.nav_activity_use_management);
         nav_activity_pomodoro_timer = View_Home_Pager_1.findViewById(R.id.nav_activity_pomodoro_timer);
         nav_activity_opencv_camera = View_Home_Pager_1.findViewById(R.id.nav_activity_opencv_camera);
-
+//        nav_activity_app_rtc = View_Home_Pager_1.findViewById(R.id.nav_activity_app_rtc);
 
         nav_activity_Chat = View_Home_Pager_1.findViewById(R.id.nav_activity_Chat);
 
@@ -157,6 +159,16 @@ public class Fragment_Home_Menu_1 extends Fragment
                 Context_Home_Pager_1.startActivity(intent);
             }
         });
+
+//        nav_activity_app_rtc.setOnClickListener(new View.OnClickListener()
+//        {
+//            @Override
+//            public void onClick(View v)
+//            {
+//                Intent intent = new Intent(Context_Home_Pager_1, ConnectActivity.class);
+//                Context_Home_Pager_1.startActivity(intent);
+//            }
+//        });
 
         // 유저 정보 불러오기
         getUserDetail();

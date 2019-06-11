@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:background="@color/bg_main"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".chat.Activity_Video_Receive">
+
+    <TextView
+        android:layout_marginTop="80dp"
+        android:layout_gravity="center"
+        android:text="영상 전화가 왔어요"
+        android:textSize="25dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/Lottie_call"
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            app:lottie_autoPlay="true"
+            app:lottie_fileName="call.json"
+            app:lottie_loop="true" />
+
+        <!--프로필 사진 영영-->
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/call_user_photo"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_gravity="center"
+            android:padding="1dp"
+            android:src="@drawable/logo_2"
+            app:civ_border_color="@color/white"
+            app:civ_border_width="0.1dp" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/call_user_name"
+        android:layout_marginBottom="95dp"
+        android:layout_gravity="center"
+        android:text="이름"
+        android:textSize="40dp"
+        android:textColor="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <LinearLayout
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/ic_call"
+            android:background="@drawable/item_bg_call"
+            android:id="@+id/call_button"
+            android:layout_marginHorizontal="50dp"
+            android:elevation="5dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp" />
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:src="@drawable/ic_call_end"
+            android:id="@+id/call_end_button"
+            android:background="@drawable/item_bg_call_end"
+            android:layout_marginHorizontal="50dp"
+            android:elevation="5dp"
+            android:layout_width="75dp"
+            android:layout_height="75dp" />
+        
+    </LinearLayout>
+
+</LinearLayout>

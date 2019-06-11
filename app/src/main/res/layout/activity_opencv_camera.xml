@@ -8,15 +8,15 @@
     tools:context=".ActivityOpenCvCamera">
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!--<org.opencv.android.PortraitCameraView-->
-            <!--android:id="@+id/activity_surface_view"-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="match_parent"-->
-            <!--tools:layout_editor_absoluteX="0dp"-->
-            <!--tools:layout_editor_absoluteY="0dp" />-->
+        <ImageView
+            android:id="@+id/image_view"
+            android:layout_width="300dp"
+            android:layout_height="wrap_content"/>
+
 
         <org.opencv.android.JavaCameraView
             android:id="@+id/activity_surface_view"
@@ -28,9 +28,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="right|bottom"
-            android:layout_marginRight="100dp"
-            android:layout_marginBottom="100dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="40dp"
             android:orientation="vertical">
 
             <Button
