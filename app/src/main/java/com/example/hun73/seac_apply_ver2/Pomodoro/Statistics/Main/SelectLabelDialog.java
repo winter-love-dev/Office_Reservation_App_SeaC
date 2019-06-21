@@ -25,7 +25,7 @@ import android.view.View;
 import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.AddEditLabelActivity;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.LabelsViewModel;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.DialogSelectLabelBinding;
 import com.google.android.material.chip.Chip;
@@ -41,7 +41,7 @@ import androidx.lifecycle.ViewModelProviders;
 
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Utils.getInstanceTotalLabel;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Utils.getInstanceUnlabeledLabel;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.COLOR_INDEX_ALL_LABELS;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.COLOR_INDEX_ALL_LABELS;
 
 
 public class SelectLabelDialog extends DialogFragment

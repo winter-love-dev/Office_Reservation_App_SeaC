@@ -1,11 +1,11 @@
-# For more information about using CMake with Android Studio, read the
+﻿# For more information about using CMake with Android Studio, read the
 # documentation: https://d.android.com/studio/projects/add-native-code.html
 
 # Sets the minimum version of CMake required to build the native library.
 
 cmake_minimum_required(VERSION 3.4.1)
 
-set(pathPROJECT C:/Users/hun73/AndroidStudioProjects/SeaC_Apply_Ver2_Pomodoro) # 수정필요
+set(pathPROJECT C:/Users/hun73/AndroidStudioProjects/SeaC_Apply_Ver2_Pomo_NDK_Ether) # 수정필요
 set(pathOPENCV ${pathPROJECT}/opencv)
 set(pathLIBOPENCV_JAVA ${pathOPENCV}/native/libs/${ANDROID_ABI}/libopencv_java4.so)
 #set(pathLIBOPENCV_JAVA ${pathPROJECT}/app/src/main/JniLibs/${ANDROID_ABI}/libopencv_java4.so)

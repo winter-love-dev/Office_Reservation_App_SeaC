@@ -22,7 +22,7 @@ import androidx.preference.PreferenceManager;
 
 import static androidx.appcompat.app.AppCompatDelegate.MODE_NIGHT_YES;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.WORK_DURATION;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants.DEFAULT_WORK_DURATION_DEFAULT;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants.DEFAULT_WORK_DURATION_DEFAULT;
 //import static com.apps.adrcotfas.goodtime.BL.PreferenceHelper.WORK_DURATION;
 //import static com.apps.adrcotfas.goodtime.Util.Constants.DEFAULT_WORK_DURATION_DEFAULT;
 

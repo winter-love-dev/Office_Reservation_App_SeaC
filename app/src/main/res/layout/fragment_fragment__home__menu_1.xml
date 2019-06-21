@@ -206,16 +206,16 @@
                     android:textColor="@color/white"
                     android:textSize="25sp" />
 
-                <!--appRTC-->
-                <!--<TextView-->
-                <!--android:id="@+id/nav_activity_app_rtc"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:layout_marginVertical="5dp"-->
-                <!--android:padding="10dp"-->
-                <!--android:text="appRTC Test"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:textSize="25sp" />-->
+                <!--ERC20 Wallet-->
+                <TextView
+                    android:id="@+id/nav_activity_erc20_wallet"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="5dp"
+                    android:padding="10dp"
+                    android:text="이더리움 지갑"
+                    android:textColor="@color/white"
+                    android:textSize="25sp" />
 
                 <View
                     android:layout_width="wrap_content"

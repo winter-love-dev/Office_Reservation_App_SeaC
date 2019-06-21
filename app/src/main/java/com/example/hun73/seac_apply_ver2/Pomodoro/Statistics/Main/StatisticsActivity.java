@@ -25,7 +25,7 @@ import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.LabelsViewModel;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.AllSessions.AddEditEntryDialog;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.AllSessions.AllSessionsFragment;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.StatisticsActivityMainBinding;
 
@@ -38,7 +38,7 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProviders;
 
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.UpgradeActivityHelper.launchUpgradeActivity;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.UpgradeActivityHelper.launchUpgradeActivity;
 
 public class StatisticsActivity extends AppCompatActivity implements SelectLabelDialog.OnLabelSelectedListener {
 

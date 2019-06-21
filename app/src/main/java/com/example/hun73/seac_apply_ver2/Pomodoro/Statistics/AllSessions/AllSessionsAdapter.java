@@ -21,7 +21,7 @@ import android.view.ViewGroup;
 
 import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
 import com.example.hun73.seac_apply_ver2.Session;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 
 import java.lang.ref.WeakReference;

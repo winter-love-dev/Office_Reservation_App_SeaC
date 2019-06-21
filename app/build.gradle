@@ -102,7 +102,7 @@ dependencies {
     // 이미지 멀티터지 줌
     implementation 'com.github.chrisbanes.photoview:library:1.2.3'
 
-    // 아래부터 모두 뽀모도로
+    // 뽀모도로
     annotationProcessor "androidx.databinding:databinding-compiler:3.5.0-alpha01"
     annotationProcessor 'androidx.room:room-compiler:2.1.0-alpha03'
     implementation 'androidx.room:room-runtime:2.1.0-alpha03'
@@ -150,4 +150,16 @@ dependencies {
     // appRTC
     implementation 'org.webrtc:google-webrtc:1.0.+'
     implementation files('libs/autobanh.jar')
+
+    // 이더리움
+    implementation project(':librarysdkew')
+    implementation project(path: ':librarysdkew')
+    implementation 'com.google.guava:guava:27.0.1-android'
+
+    implementation 'org.web3j:core:3.3.1-android'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'com.googlecode.json-simple:json-simple:1.1'
+    implementation 'com.google.zxing:core:3.3.2'
+    implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
+    implementation 'org.bitcoinj:bitcoinj-core:0.14.7'
 }

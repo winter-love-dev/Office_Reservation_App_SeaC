@@ -13,7 +13,7 @@
 
 package com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main;
 
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 

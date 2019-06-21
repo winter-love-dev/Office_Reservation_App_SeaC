@@ -15,7 +15,7 @@ package com.example.hun73.seac_apply_ver2.Pomodoro.Settings;
 
 import android.os.Bundle;
 
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.GenericMainBinding;
 

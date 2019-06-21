@@ -32,7 +32,7 @@ import android.util.Log;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Database.AppDatabase;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.TimerActivity;
 import com.example.hun73.seac_apply_ver2.Session;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants;
 
 import java.util.concurrent.TimeUnit;
 
@@ -41,8 +41,8 @@ import de.greenrobot.event.EventBus;
 
 import static android.media.AudioManager.RINGER_MODE_SILENT;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.NotificationHelper.GOODTIME_NOTIFICATION_ID;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants.SESSION_TYPE;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.formatTime;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants.SESSION_TYPE;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.formatTime;
 //import static com.apps.adrcotfas.goodtime.BL.NotificationHelper.GOODTIME_NOTIFICATION_ID;
 //import static com.apps.adrcotfas.goodtime.Util.Constants.SESSION_TYPE;
 //import static com.apps.adrcotfas.goodtime.Util.StringUtils.formatTime;

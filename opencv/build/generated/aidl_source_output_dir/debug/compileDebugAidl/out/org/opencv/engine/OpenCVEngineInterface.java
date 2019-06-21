@@ -1,6 +1,6 @@
 /*
  * This file is auto-generated.  DO NOT MODIFY.
- * Original file: C:\\Users\\hun73\\AndroidStudioProjects\\SeaC_Apply_Ver2_Pomodoro\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
+ * Original file: C:\\Users\\hun73\\AndroidStudioProjects\\SeaC_Apply_Ver2_Pomo_NDK_Ether\\opencv\\java\\src\\org\\opencv\\engine\\OpenCVEngineInterface.aidl
  */
 package org.opencv.engine;
 /**

@@ -52,7 +52,7 @@ float resize(Mat img_src, Mat &img_resize, int resize_width) {
 
 extern "C"
 JNIEXPORT jlong JNICALL
-Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_loadCascade(JNIEnv *env,
+Java_com_example_hun73_seac_1apply_1ver2_opencv_ActivityOpenCvCamera_loadCascade(JNIEnv *env,
                                                                           jobject instance,
                                                                           jstring cascadeFileName_) {
     const char *nativeFileNameString = env->GetStringUTFChars(cascadeFileName_, 0);
@@ -80,7 +80,7 @@ Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_loadCascade(JNIEnv
 /// 안면인식 활성화
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_detect_1On(JNIEnv *env, jobject instance,
+Java_com_example_hun73_seac_1apply_1ver2_opencv_ActivityOpenCvCamera_detect(JNIEnv *env, jobject instance,
                                                                      jlong cascadeClassifier_face,
                                                                      jlong cascadeClassifier_eye,
                                                                      jlong matAddrInput,
@@ -291,7 +291,7 @@ Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_detect_1On(JNIEnv 
 /// 안면인식 종료
 extern "C"
 JNIEXPORT jint JNICALL
-Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_detect_1Off(JNIEnv *env, jobject instance,
+Java_com_example_hun73_seac_1apply_1ver2_opencv_ActivityOpenCvCamera_detect2(JNIEnv *env, jobject instance,
                                                                       jlong cascadeClassifier_face,
                                                                       jlong cascadeClassifier_eye,
                                                                       jlong matAddrInput,
@@ -353,4 +353,6 @@ Java_com_example_hun73_seac_1apply_1ver2_ActivityOpenCvCamera_detect_1Off(JNIEnv
     return ret;
 
 }
+
+
 

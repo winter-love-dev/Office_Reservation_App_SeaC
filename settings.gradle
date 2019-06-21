@@ -1,2 +1,2 @@
-include ':app', ':navigationtabbar', ':opencv'
+include ':app', ':navigationtabbar', ':opencv', ':librarysdkew'
 

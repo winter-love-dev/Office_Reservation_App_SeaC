@@ -30,8 +30,8 @@ import android.util.Log;
 //import com.apps.adrcotfas.goodtime.Util.IntentWithAction;
 
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.TimerActivity;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.IntentWithAction;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.IntentWithAction;
 import com.example.hun73.seac_apply_ver2.R;
 
 import java.util.concurrent.TimeUnit;

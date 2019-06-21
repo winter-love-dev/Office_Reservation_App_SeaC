@@ -16,7 +16,6 @@ package com.example.hun73.seac_apply_ver2.Pomodoro.Main;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.graphics.PorterDuff;
 import android.os.Build;
 import android.os.Bundle;
@@ -32,7 +31,6 @@ import android.widget.FrameLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.hun73.seac_apply_ver2.Activity_Home;
 import com.example.hun73.seac_apply_ver2.Pomodoro.BL.CurrentSession;
 import com.example.hun73.seac_apply_ver2.Pomodoro.BL.GoodtimeApplication;
 import com.example.hun73.seac_apply_ver2.Pomodoro.BL.NotificationHelper;
@@ -45,10 +43,10 @@ import com.example.hun73.seac_apply_ver2.Session;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Settings.SettingsActivity;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.SelectLabelDialog;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.SessionViewModel;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.IntentWithAction;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.OnSwipeTouchListener;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.IntentWithAction;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.OnSwipeTouchListener;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.ActivityMainBinding;
 import com.google.android.material.snackbar.Snackbar;
@@ -62,7 +60,6 @@ import java.util.Locale;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -83,7 +80,7 @@ import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.AMO
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.ENABLE_SCREENSAVER_MODE;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.ENABLE_SCREEN_ON;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.WORK_DURATION;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.UpgradeActivityHelper.launchUpgradeActivity;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.UpgradeActivityHelper.launchUpgradeActivity;
 import static java.lang.String.format;
 
 //TODO: remove duplicate from the other flavor

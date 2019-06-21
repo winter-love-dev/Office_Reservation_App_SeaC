@@ -29,7 +29,7 @@ import com.danielstone.materialaboutlibrary.items.MaterialAboutTitleItem;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutCard;
 import com.danielstone.materialaboutlibrary.model.MaterialAboutList;
 import com.example.hun73.seac_apply_ver2.BuildConfig;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.DeviceInfo;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.DeviceInfo;
 import com.example.hun73.seac_apply_ver2.R;
 import com.mikepenz.community_material_typeface_library.CommunityMaterial;
 import com.mikepenz.iconics.IconicsDrawable;

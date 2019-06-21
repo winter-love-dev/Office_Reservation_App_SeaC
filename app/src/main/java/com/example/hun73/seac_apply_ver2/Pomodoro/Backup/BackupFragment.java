@@ -25,7 +25,7 @@ import android.widget.Toast;
 
 import com.example.hun73.seac_apply_ver2.Pomodoro.Database.AppDatabase;
 import com.example.hun73.seac_apply_ver2.Session;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.FileUtils;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.FileUtils;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.SessionViewModel;
 import com.example.hun73.seac_apply_ver2.databinding.DialogBackupBinding;
@@ -47,7 +47,7 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.databinding.DataBindingUtil;
 
 import static android.app.Activity.RESULT_OK;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.formatDateAndTime;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.formatDateAndTime;
 //import static com.apps.adrcotfas.goodtime.Util.StringUtils.formatDateAndTime;
 
 public class BackupFragment extends BottomSheetDialogFragment

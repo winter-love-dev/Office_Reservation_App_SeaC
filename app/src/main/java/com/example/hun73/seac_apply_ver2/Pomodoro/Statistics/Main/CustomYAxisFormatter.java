@@ -16,7 +16,7 @@ package com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.formatLong;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.formatLong;
 
 public class CustomYAxisFormatter implements IAxisValueFormatter {
     @Override

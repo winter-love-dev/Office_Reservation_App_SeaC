@@ -30,9 +30,9 @@ import com.example.hun73.seac_apply_ver2.Pomodoro.Main.LabelsViewModel;
 import com.example.hun73.seac_apply_ver2.Session;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.SelectLabelDialog;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.SessionViewModel;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.DatePickerFragment;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.TimePickerFragment;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.DatePickerFragment;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.TimePickerFragment;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.DialogAddEntryBinding;
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment;
@@ -52,8 +52,8 @@ import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.AllSessions.
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.StatisticsActivity.DIALOG_DATE_PICKER_TAG;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.StatisticsActivity.DIALOG_SELECT_LABEL_TAG;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.StatisticsActivity.DIALOG_TIME_PICKER_TAG;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.*;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.COLOR_INDEX_UNLABELED;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.*;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.COLOR_INDEX_UNLABELED;
 
 public class AddEditEntryDialog extends BottomSheetDialogFragment implements
         DatePickerDialog.OnDateSetListener,

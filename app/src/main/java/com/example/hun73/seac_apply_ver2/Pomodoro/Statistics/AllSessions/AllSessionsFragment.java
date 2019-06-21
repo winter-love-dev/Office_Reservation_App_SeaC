@@ -51,7 +51,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.StatisticsActivity.DIALOG_SELECT_LABEL_TAG;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.UpgradeActivityHelper.launchUpgradeActivity;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.UpgradeActivityHelper.launchUpgradeActivity;
 
 
 public class AllSessionsFragment extends Fragment implements SelectLabelDialog.OnLabelSelectedListener {

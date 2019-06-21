@@ -20,11 +20,11 @@ import android.util.Log;
 
 //import com.apps.adrcotfas.goodtime.Util.Constants;
 
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants;
 
 import de.greenrobot.event.EventBus;
 
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants.SESSION_TYPE;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants.SESSION_TYPE;
 
 //import static com.apps.adrcotfas.goodtime.Util.Constants.SESSION_TYPE;
 

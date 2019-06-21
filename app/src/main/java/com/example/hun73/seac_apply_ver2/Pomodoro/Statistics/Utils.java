@@ -18,8 +18,8 @@ import android.content.Context;
 import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
 import com.example.hun73.seac_apply_ver2.R;
 
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.COLOR_INDEX_ALL_LABELS;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.COLOR_INDEX_UNLABELED;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.COLOR_INDEX_ALL_LABELS;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.COLOR_INDEX_UNLABELED;
 
 public class Utils {
     public static LabelAndColor getInstanceTotalLabel(Context context) {

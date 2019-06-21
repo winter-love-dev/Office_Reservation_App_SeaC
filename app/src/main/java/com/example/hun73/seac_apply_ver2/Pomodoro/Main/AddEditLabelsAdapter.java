@@ -23,7 +23,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.takisoft.colorpicker.ColorPickerDialog;
 
@@ -36,8 +36,8 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Main.AddEditLabelActivity.labelIsGoodToAdd;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.clearFocusEditText;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper.requestFocusEditText;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.clearFocusEditText;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper.requestFocusEditText;
 
 public class AddEditLabelsAdapter extends RecyclerView.Adapter<AddEditLabelsAdapter.ViewHolder> {
 

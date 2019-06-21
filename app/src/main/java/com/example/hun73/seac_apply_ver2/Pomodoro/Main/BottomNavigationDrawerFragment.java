@@ -19,10 +19,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
-import com.example.hun73.seac_apply_ver2.BuildConfig;
 import com.example.hun73.seac_apply_ver2.Pomodoro.About.AboutActivity;
 import com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Backup.BackupFragment;
@@ -41,7 +38,7 @@ import androidx.core.widget.NestedScrollView;
 import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.FragmentManager;
 
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.UpgradeActivityHelper.launchUpgradeActivity;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.UpgradeActivityHelper.launchUpgradeActivity;
 
 public class BottomNavigationDrawerFragment extends BottomSheetDialogFragment
 {

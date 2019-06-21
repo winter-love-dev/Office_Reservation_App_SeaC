@@ -32,7 +32,7 @@ import com.example.hun73.seac_apply_ver2.Pomodoro.LabelAndColor;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.LabelsViewModel;
 import com.example.hun73.seac_apply_ver2.Session;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.SessionViewModel;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.ThemeHelper;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.ThemeHelper;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.databinding.StatisticsFragmentMainBinding;
 import com.github.mikephil.charting.animation.Easing;
@@ -67,9 +67,9 @@ import androidx.lifecycle.ViewModelProviders;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.SpinnerProductiveTimeType.DAY_OF_WEEK;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.SpinnerProductiveTimeType.HOUR_OF_DAY;
 import static com.example.hun73.seac_apply_ver2.Pomodoro.Statistics.Main.SpinnerStatsType.DURATION;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.formatLong;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.formatMinutes;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.StringUtils.toPercentage;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.formatLong;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.formatMinutes;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.StringUtils.toPercentage;
 
 
 public class StatisticsFragment extends Fragment

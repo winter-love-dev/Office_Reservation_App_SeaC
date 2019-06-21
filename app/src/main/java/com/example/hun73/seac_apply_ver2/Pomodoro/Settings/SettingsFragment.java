@@ -29,7 +29,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper;
-import com.example.hun73.seac_apply_ver2.Pomodoro.Util.Constants;
+import com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.Constants;
 import com.example.hun73.seac_apply_ver2.R;
 import com.takisoft.preferencex.PreferenceFragmentCompat;
 import com.takisoft.preferencex.RingtonePreference;
@@ -43,7 +43,7 @@ import androidx.preference.Preference;
 import androidx.preference.SwitchPreferenceCompat;
 
 import static com.example.hun73.seac_apply_ver2.Pomodoro.BL.PreferenceHelper.DISABLE_SOUND_AND_VIBRATION;
-import static com.example.hun73.seac_apply_ver2.Pomodoro.Util.UpgradeActivityHelper.launchUpgradeActivity;
+import static com.example.hun73.seac_apply_ver2.Pomodoro.Pomodoro_Util.UpgradeActivityHelper.launchUpgradeActivity;
 
 public class SettingsFragment extends PreferenceFragmentCompat implements ActivityCompat.OnRequestPermissionsResultCallback {
 
