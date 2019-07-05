@@ -20,9 +20,13 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+//        dexOptions {
+//            // release & debug is in project animators
+//            matchingFallbacks = ['release', 'debug']
+//        }
     }
     flavorDimensions("cevafin")
 
@@ -46,6 +50,13 @@ android {
         }
     }
 }
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
 
 dependencies {
     androidTestImplementation('androidx.test.espresso:espresso-core:3.2.0-alpha04', {
@@ -162,4 +173,7 @@ dependencies {
     implementation 'com.google.zxing:core:3.3.2'
     implementation 'com.journeyapps:zxing-android-embedded:3.6.0'
     implementation 'org.bitcoinj:bitcoinj-core:0.14.7'
+
+    // Wowza Streaming
+    implementation 'com.wowza.gocoder.sdk.android:com.wowza.gocoder.sdk:2.0@aar'
 }

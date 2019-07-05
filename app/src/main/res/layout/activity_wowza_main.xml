@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hun73.seac_apply_ver2.Wowza.Wowza_Main">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/wowza_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/white">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <!--&lt;!&ndash;로고 이미지&ndash;&gt;-->
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="match_parent"
+                android:padding="1dp"
+                android:src="@drawable/logo_4" />
+
+            <TextView
+                android:layout_weight="1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:padding="5dp"
+                android:textStyle="italic"
+                android:text="Host Live"
+                android:textColor="@color/bg_main"
+                android:textSize="25sp" />
+
+            <!--방송 송출-->
+            <TextView
+                android:text="방송하기"
+                android:layout_gravity="center"
+                android:layout_marginRight="15dp"
+                android:padding="8dp"
+                android:visibility="gone"
+                android:id="@+id/wowza_main_activity_camera_activity"
+                android:background="@drawable/cell_shape"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/gray"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0.1dp"
+        android:background="@color/bg_main" />
+
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:id="@+id/wowza_swipe_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/wowza_broadcast_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+    <!--방송 시청-->
+    <TextView
+        android:id="@+id/wowza_main_activity_player_activity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="방송 시청 테스트"
+        android:textColor="@color/black"
+        android:textSize="25sp" />
+
+
+
+    <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:id="@+id/imageView"-->
+        <!--android:scaleType="fitCenter"-->
+        <!--android:src="@drawable/overlay_logo"-->
+        <!--android:alpha="0.1"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:adjustViewBounds="false"-->
+        <!--android:paddingLeft="10dp"-->
+        <!--android:paddingRight="10dp">-->
+    <!--</ImageView>-->
+
+    <!-- 리스트뷰 -->
+    <!--<RelativeLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent">-->
+
+        <!--<ListView-->
+            <!--android:id="@android:id/list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:choiceMode="singleChoice"-->
+            <!--android:divider="@null"-->
+            <!--android:dividerHeight="0dp"-->
+            <!--android:drawSelectorOnTop="false">-->
+        <!--</ListView>-->
+
+        <!--<ListView-->
+            <!--android:id="@android:id/list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_above="@+id/txtSDKVersion"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:layout_alignParentTop="true"-->
+            <!--android:choiceMode="singleChoice"-->
+            <!--android:divider="@null"-->
+            <!--android:dividerHeight="0dp"-->
+            <!--android:drawSelectorOnTop="false">-->
+        <!--</ListView>-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/txtSDKVersion"-->
+            <!--android:background="@android:color/black"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentBottom="true"-->
+            <!--android:layout_alignParentEnd="true"-->
+            <!--android:layout_alignParentStart="true"-->
+            <!--android:paddingBottom="10dp"-->
+            <!--android:paddingTop="10dp"-->
+            <!--android:text="GoCoder SDK vX.X.X"-->
+            <!--android:textAlignment="center"/>-->
+
+    <!--</RelativeLayout>-->
+
+</LinearLayout>

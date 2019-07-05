@@ -133,6 +133,7 @@ public class Activity_ChatRoom extends AppCompatActivity
 
     RecyclerView message_area;
     ChattingRoomAdapter chattingRoomAdapter;
+
     List<chattingMessageContent> messageData;
     chattingMessageContent messageContent;
 
@@ -160,8 +161,6 @@ public class Activity_ChatRoom extends AppCompatActivity
     ReceiveThread recevie;
 
     SimpleDateFormat mFormat = new SimpleDateFormat("aa hh:mm");
-
-    //
 
     // 현재 시간 받아오기
     long mNow;

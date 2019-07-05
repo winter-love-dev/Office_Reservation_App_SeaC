@@ -12,6 +12,7 @@ import com.example.hun73.seac_apply_ver2.RecyclerView.Use_Work_Soon_Item;
 import com.example.hun73.seac_apply_ver2.RecyclerView.chattingMessageContent;
 import com.example.hun73.seac_apply_ver2.WorkUseManagement.Fragment_Use_Work_Soon;
 import com.example.hun73.seac_apply_ver2.WorkUseManagement.Review_Detail_Itam;
+import com.example.hun73.seac_apply_ver2.Wowza.BroadCastListItem;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -56,6 +57,11 @@ public interface ApiInterface
     @FormUrlEncoded
     @POST("WorkList_Home.php")
     Call<List<Home_Item>> WorkList_Home(@Field("id") String id);
+
+    // 방송목록 불러오기
+    @FormUrlEncoded
+    @POST("Broadcast_list_request.php")
+    Call<List<BroadCastListItem>> BroadCastListItem(@Field("id") String id);
 
     // 현재 이용중인 사무실 불러오기
     @FormUrlEncoded
@@ -121,6 +127,8 @@ public interface ApiInterface
     @FormUrlEncoded
     @POST("Chat_Message_getRecord.php")
     Call<List<chattingMessageContent>> Chat_getMessage(@Field("room_no") String room_no);
+
+
 }
 
 //IntentAddress1

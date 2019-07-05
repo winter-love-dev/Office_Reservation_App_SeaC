@@ -4,4 +4,11 @@
     <attr name="alertDialogColor" format="reference"/>
     <attr name="cardViewColor" format="reference"/>
     <attr name="palette" format="reference"/>
+
+    <declare-styleable name="MultiStateButton">
+        <attr name="offSrc" format="integer"/>
+        <attr name="isOn" format="boolean"/>
+        <attr name="pressedColor" format="color"/>
+    </declare-styleable>
+
 </resources>

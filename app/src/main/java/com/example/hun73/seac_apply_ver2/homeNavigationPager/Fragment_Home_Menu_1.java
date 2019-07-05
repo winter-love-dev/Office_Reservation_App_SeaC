@@ -29,6 +29,7 @@ import com.example.hun73.seac_apply_ver2.ERC20_Wallet.WalletActivity;
 import com.example.hun73.seac_apply_ver2.Pomodoro.Main.TimerActivity;
 import com.example.hun73.seac_apply_ver2.R;
 import com.example.hun73.seac_apply_ver2.WorkUseManagement.WorkUseManagement;
+import com.example.hun73.seac_apply_ver2.Wowza.Wowza_Main;
 import com.squareup.picasso.MemoryPolicy;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -65,6 +66,7 @@ public class Fragment_Home_Menu_1 extends Fragment
             nav_activity_pomodoro_timer,
             nav_activity_opencv_camera,
             nav_activity_erc20_wallet,
+            nav_activity_broadcast,
             nav_use_guide,
             nav_count;
 
@@ -93,6 +95,7 @@ public class Fragment_Home_Menu_1 extends Fragment
         nav_activity_pomodoro_timer = View_Home_Pager_1.findViewById(R.id.nav_activity_pomodoro_timer);
         nav_activity_opencv_camera = View_Home_Pager_1.findViewById(R.id.nav_activity_opencv_camera);
         nav_activity_erc20_wallet = View_Home_Pager_1.findViewById(R.id.nav_activity_erc20_wallet);
+        nav_activity_broadcast = View_Home_Pager_1.findViewById(R.id.nav_activity_broadcast);
 
         nav_activity_Chat = View_Home_Pager_1.findViewById(R.id.nav_activity_Chat);
 
@@ -149,7 +152,7 @@ public class Fragment_Home_Menu_1 extends Fragment
             }
         });
 
-        // 뽀모도로 타이머로 이동하기
+        // 얼굴인식 카메라로 이동하기
         nav_activity_opencv_camera.setOnClickListener(new View.OnClickListener()
         {
             @Override
@@ -170,16 +173,6 @@ public class Fragment_Home_Menu_1 extends Fragment
                 Context_Home_Pager_1.startActivity(intent);
             }
         });
-
-//        nav_activity_app_rtc.setOnClickListener(new View.OnClickListener()
-//        {
-//            @Override
-//            public void onClick(View v)
-//            {
-//                Intent intent = new Intent(Context_Home_Pager_1, ConnectActivity.class);
-//                Context_Home_Pager_1.startActivity(intent);
-//            }
-//        });
 
         // 유저 정보 불러오기
         getUserDetail();
@@ -300,6 +293,25 @@ public class Fragment_Home_Menu_1 extends Fragment
                                                 into(slide_profile_image);
 
                                     }
+
+
+                                    // todo: 방송 페이지로 이동하기
+                                    nav_activity_broadcast.setOnClickListener(new View.OnClickListener()
+                                    {
+                                        @Override
+                                        public void onClick(View v)
+                                        {
+                                            Intent intent = new Intent(Context_Home_Pager_1, Wowza_Main.class);
+
+                                            // 방송 입장 후 채팅을 하기위한 내 정보 전달
+                                            intent.putExtra("strImage", strImage);
+                                            intent.putExtra("strName", strName);
+                                            intent.putExtra("getId", getId);
+                                            intent.putExtra("strType", strType);
+
+                                            Context_Home_Pager_1.startActivity(intent);
+                                        }
+                                    });
                                 }
                             }
                         } // try에 포함된 로직 중 틀린 코드가 있으면 예외상황으로 간주함.

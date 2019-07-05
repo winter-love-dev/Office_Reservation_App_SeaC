@@ -354,5 +354,3 @@ Java_com_example_hun73_seac_1apply_1ver2_opencv_ActivityOpenCvCamera_detect2(JNI
 
 }
 
-
-

@@ -5,6 +5,8 @@ import android.content.Intent;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+
+import android.graphics.drawable.GradientDrawable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -92,6 +94,12 @@ public class Home_Adapter extends RecyclerView.Adapter<Home_Adapter.RecyclerView
                 placeholder(R.drawable.logo_2).
                 networkPolicy(NetworkPolicy.NO_CACHE).
                 into(recyclerView_home_viewHolder.imageView);
+
+        // 사진 끝 둥글게
+        GradientDrawable drawable=
+                (GradientDrawable) mContext.getDrawable(R.drawable.item_image_round_corner_2);
+        recyclerView_home_viewHolder.imageView.setBackground(drawable);
+        recyclerView_home_viewHolder.imageView.setClipToOutline(true);
 
         recyclerView_home_viewHolder.work_name.setText(work_Name);
         recyclerView_home_viewHolder.work_table.setText("남은 테이블: " + Table_Total);

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_margin="5dp"
+    android:background="@drawable/item_wowza_chat"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/wowza_chat_item_photo"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="1dp"
+        android:layout_margin="4dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/logo_2"
+        android:layout_width="28dp"
+        android:layout_height="28dp" />
+    
+    <LinearLayout
+        android:layout_weight="1"
+        android:layout_marginVertical="4dp"
+        android:layout_marginLeft="1dp"
+        android:layout_marginRight="15dp"
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/wowza_chat_item_name"
+            android:text="Name"
+            android:textSize="9dp"
+            android:textColor="@color/gray2"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:id="@+id/wowza_chat_item_message"
+            android:text="Text"
+            android:textSize="10dp"
+            android:textColor="@color/white"
+            android:gravity="center_vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+    </LinearLayout>
+
+</LinearLayout>
